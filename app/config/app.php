@@ -125,6 +125,7 @@ return array(
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Innaco\Components\FieldServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
+		'Jacopo\Authentication\AuthenticationServiceProvider',
 
 
 	),

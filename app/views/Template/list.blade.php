@@ -15,9 +15,9 @@
     <table class="table .table-hover">
         <thead>
             <tr>
-                <th width="30%">Tipo Documento</th>
+                <th width="20%">Tipo Documento</th>
                 <th width="40%">Nombre</th>
-                <th width="30%">Acciones</th>
+                <th width="40%">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,10 +27,16 @@
                 <td class="name">{{$template->name}}</td>
                 <td>
                     {{ Form::open(['route' => ['template.destroy', $template->id ], 'method' => 'DELETE']) }}
+                    <a class="btn btn-info" href="{{ Route('steps', $template->id) }}">
+                        Asignar Pasos
+                    </a>
+                    <a class="btn btn-primary" href="{{ Route('template.show', $template->id) }}">
+                        Mostrar
+                    </a>
                     <a class="btn btn-success" href="{{Route('template.edit', $template->id)}}">
                         Editar
                     </a>
-                        {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger']) }}
+                    {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger']) }}
                     {{ Form::close() }}
                 </td>
 

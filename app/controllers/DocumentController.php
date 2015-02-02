@@ -41,7 +41,14 @@ class DocumentController extends \BaseController {
 	 */
 	public function create()
 	{
-
+		if(Input::has('search'))
+		{
+			$typeDocuments = $this->typeDocumentRepo->search(Input::get('search'));
+		}
+		else{
+			$typeDocuments = $this->typeDocumentRepo->findAll(true);
+		}
+		return View::make('document.create',compact('typeDocuments'));
 	}
 
 
@@ -53,7 +60,7 @@ class DocumentController extends \BaseController {
 	public function store()
 	{
 		$data = Input::all();
-		$task = $this->taskRepo->newTask();
+		$template = $this->taskRepo->newTask();
 		$manager = new TaskManager($task, $data);
 		$manager->save();
 

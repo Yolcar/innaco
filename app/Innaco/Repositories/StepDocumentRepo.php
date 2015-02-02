@@ -2,14 +2,14 @@
 
 use Innaco\Entities\stepDocument;
 
-class stepDocumentRepo extends BaseRepo{
+class StepDocumentRepo extends BaseRepo{
 
     public function getModel()
     {
         return new stepDocument();
     }
 
-    public function newDocument()
+    public function newStepDocument()
     {
         $stepDocument = new stepDocument();
         return $stepDocument;

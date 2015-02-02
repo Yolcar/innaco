@@ -24,7 +24,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'homestead',
-			'username'  => 'homestead',
+			'username'  => 'root',
 			'password'  => 'secret',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',

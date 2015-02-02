@@ -9,7 +9,7 @@ class TemplateRepo extends BaseRepo{
         return new Template;
     }
 
-    public function newDocument()
+    public function newTemplate()
     {
         $template = new Template();
         return $template;

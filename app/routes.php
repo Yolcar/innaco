@@ -27,11 +27,10 @@
 
     Route::resource('workflow','WorkflowController');
 
-    Route::get('type',['as' => 'type', function(){
-        return View::make('angular');
-    }]);
+    Route::get('template/{id}/step',['as' => 'steps', 'uses' => 'templateController@steps']);
+    Route::post('template/stepSave',['as' => 'stepsSave', 'uses' => 'templateController@stepsSave']);
 
-    Route::get('getData', ['uses' => 'DocumentController@getTypeDocument']);
+    Route::get('prueba',['as' => 'prueba', 'uses' => 'pruebaController@index']);
 
 
     //Tipos de Documentos

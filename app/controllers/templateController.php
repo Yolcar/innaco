@@ -2,19 +2,25 @@
 
 use Innaco\Repositories\TemplateRepo;
 use Innaco\Repositories\TypeDocumentRepo;
+use Innaco\Repositories\StepDocumentRepo;
+use Innaco\Repositories\TaskRepo;
 use Innaco\Managers\TemplateManager;
-use Innaco\Managers\TypeDocumentManager;
+use Innaco\Managers\StepDocumentManager;
 
 class templateController extends \BaseController {
 
 
 	protected $templateRepo;
 	protected $typeDocumentRepo;
+	protected $stepDocumentRepo;
+	protected $taskRepo;
 
-	public function __construct(TemplateRepo $templateRepo, TypeDocumentRepo $typeDocumentRepo)
+	public function __construct(TemplateRepo $templateRepo, TypeDocumentRepo $typeDocumentRepo, StepDocumentRepo $stepDocumentRepo, TaskRepo $taskRepo)
 	{
 		$this->templateRepo = $templateRepo;
 		$this->typeDocumentRepo = $typeDocumentRepo;
+		$this->stepDocumentRepo = $stepDocumentRepo;
+		$this->taskRepo = $taskRepo;
 	}
 
 	/**
@@ -52,20 +58,6 @@ class templateController extends \BaseController {
 		return View::make('template.create',compact('typeDocuments'));
 	}
 
-	public function selectTypeDocument()
-	{
-		if(Input::has('search'))
-		{
-			$typeDocument = $this->typeDocumentRepo->search(Input::get('search'));
-		}
-		else{
-			$typeDocument = $this->typeDocumentRepo->findAll(true);
-		}
-		return Response::json( array(
-			'datos' => $typeDocument,
-		));
-	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -75,11 +67,11 @@ class templateController extends \BaseController {
 	public function store()
 	{
 		$data = Input::all();
-		$task = $this->taskRepo->newTask();
-		$manager = new TaskManager($task, $data);
+		$template = $this->templateRepo->newTemplate();
+		$manager = new TemplateManager($template, $data);
 		$manager->save();
 
-		return Redirect::route('task.index');
+		return Redirect::route('template.index');
 	}
 
 
@@ -91,7 +83,44 @@ class templateController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$template = $this->templateRepo->find($id);
+		return View::make('template.show')->with('template',$template);
+	}
+
+	public function steps($id)
+	{
+		$template = $this->templateRepo->find($id);
+		$steps = $this->taskRepo->findAll();
+		$groups = DB::table('groups')->orderBy('id','asc')->lists('name','id');
+		$totalSteps = $this->taskRepo->getModel()->orderBy('id','asc')->lists('id','id');
+		$stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$id)->get();
+
+		return View::make('stepdocument.step',compact('steps','groups','stepDocuments'))->with('template',$template)->with('totalSteps',$totalSteps);
+	}
+
+	public function stepsSave()
+	{
+		$template_id = Input::get('templates_id');
+		$groups_id = Input::get('groups_id');
+		$tasks_id = Input::get('tasks_id');
+		$order = Input::get('order');
+
+		$tasks = DB::table('step_documents')->where('templates_id', '=' ,$template_id)->get();
+
+		foreach($tasks as $task){
+			DB::table('step_documents')->delete($task->id);
+		}
+
+		foreach ($tasks_id as $key => $n) {
+			if($groups_id[$key] !=NULL AND $order[$key]!=NULL){
+				$arrData = array('templates_id' => $template_id, 'tasks_id' => $tasks_id[$key], 'groups_id' => $groups_id[$key], 'order' => $order[$key]);
+				$stepDocument = $this->stepDocumentRepo->newStepDocument();
+				$manager = new StepDocumentManager($stepDocument, $arrData);
+				$manager->save();
+			}
+		}
+
+		return Redirect::route('template.index');
 	}
 
 
@@ -103,8 +132,8 @@ class templateController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$task = $this->taskRepo->find($id);
-		return View::make('task.edit')->with('task',$task);
+		$template = $this->templateRepo->find($id);
+		return View::make('template.edit')->with('template',$template);
 	}
 
 
@@ -116,12 +145,12 @@ class templateController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$task = $this->taskRepo->find($id);
+		$template = $this->templateRepo->find($id);
 		$data = Input::all();
-		$manager = new TaskManager($task, $data);
+		$manager = new TemplateManager($template, $data);
 		$manager->save();
 
-		return Redirect::route('task.index');
+		return Redirect::route('template.index');
 	}
 
 
@@ -133,11 +162,11 @@ class templateController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$task = $this->taskRepo->find($id);
+		$template = $this->templateRepo->find($id);
 
-		$task->delete();
+		$template->delete();
 
-		return Redirect::route('task.index');
+		return Redirect::route('template.index');
 
 	}
 

@@ -12,12 +12,13 @@ class CreateStepdocumentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('stepdocuments', function(Blueprint $table)
+		Schema::create('step_documents', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('templates_id');
 			$table->integer('tasks_id');
 			$table->integer('groups_id');
+			$table->integer('order');
 			$table->timestamps();
 		});
 	}
@@ -30,7 +31,7 @@ class CreateStepdocumentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('stepdocuments');
+		Schema::drop('step_documents');
 	}
 
 }

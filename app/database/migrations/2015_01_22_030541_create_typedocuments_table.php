@@ -28,7 +28,7 @@ class CreateTypedocumentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('typedocuments');
+		Schema::drop('type_documents');
 	}
 
 }

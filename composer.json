@@ -7,6 +7,7 @@
   	"require-dev": {
 		"way/generators": "~2.0",
 	  	"codeception/codeception": "2.0.*",
+	  	"barryvdh/laravel-debugbar": "~1.8",
 	  	"fzaninotto/faker": "v1.3.0"
   	},
 	"require": {
@@ -14,7 +15,7 @@
 		"barryvdh/laravel-ide-helper": "~1.11",
 	  	"caouecs/laravel4-lang": "dev-master",
 	  	"nicolaslopezj/searchable": "1.*",
-		"barryvdh/laravel-debugbar": "~1.8"
+	  	"jacopo/laravel-authentication-acl": "1.2.*"
 	},
 	"autoload": {
 	  "psr-4": {
