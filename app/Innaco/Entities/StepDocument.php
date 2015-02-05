@@ -1,7 +1,23 @@
 <?php namespace Innaco\Entities;
 
+use Nicolaslopezj\Searchable\SearchableTrait;
+
 
 class stepDocument extends \Eloquent {
+
+	use SearchableTrait;
+
+	/**
+	 * Searchable rules.
+	 *
+	 * @var array
+	 */
+	protected $searchable = [
+		'columns' => [
+			'name' => 10,
+		],
+	];
+
 	protected $fillable = ['templates_id','tasks_id', 'groups_id','order'];
 
 	public function template(){

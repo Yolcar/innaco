@@ -32,8 +32,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">Llenar Campo</h4>
                 </div>
-                <div id="example_filter" class="dataTables_filter"><label>Buscar:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example"></label></div>
-                <table class="table .table-hover">
+
+                 <table class="table .table-hover">
                     <thead>
                     <tr>
                         <th width="30%">Tipo Plantilla</th>
@@ -72,8 +72,31 @@
 
 
     </p>
+    @include('document.filters')
+    <table class="table .table-hover">
+        <thead>
+        <tr>
+            <th width="30%">Tipo Plantilla</th>
+            <th width="40%">Nombre</th>
+            <th width="30%">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($documents as $document)
+            <tr>
+                <td>{{$document->template->name}}</td>
+                <td class="name">{{$document->name}}</td>
+                <td>
 
+                <td>
+                    <button onclick="asignarID('{{$document->name}}')" type="button" class="btn btn-primary" data-dismiss="modal">Usar Tipo</button>
+                </td>
+                </td>
 
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 
 
     <h1 </h1>
@@ -98,3 +121,8 @@
 
 
 @endsection
+
+
+
+
+

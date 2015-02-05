@@ -5,7 +5,7 @@
 @section('body')
     <h1 class="page-header">Documento</h1>
 <p>
-    <a class="btn btn-info" href="{{Route('document.create')}}">Crear Documento</a>
+    <a class="btn btn-info" href="{{ Route('document.create') }}">Crear Documento</a>
 </p>
 
     <h3>Se encontraron {{$documents->getTotal()}} Documentos.</h3>

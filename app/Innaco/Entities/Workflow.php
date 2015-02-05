@@ -2,6 +2,7 @@
 
 
 class Workflow extends \Eloquent {
+
 	protected $fillable = ['document_id','users_id', 'state_id','stepdocument_id'];
 
 	public function document(){

@@ -1,6 +1,23 @@
 <?php namespace Innaco\Entities;
 
+use Nicolaslopezj\Searchable\SearchableTrait;
+
 class Template extends \Eloquent {
+
+	use SearchableTrait;
+
+	/**
+	 * Searchable rules.
+	 *
+	 * @var array
+	 */
+	protected $searchable = [
+		'columns' => [
+			'name' => 10,
+			'body' => 5
+		],
+	];
+
 	protected $fillable = ['name', 'body','typedocuments_id'];
 
 	public function documents(){

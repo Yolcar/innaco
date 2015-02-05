@@ -15,17 +15,11 @@
         </thead>
 
         <tbody>
-        @foreach($workflows as $workflow)
-            <tr>
-                <td>{{$workflow->id}}</td>
-                <td>{{$workflow->user->email}}</td>
-                <td>{{$workflow->estado->name}}</td>
 
-            </tr>
-        @endforeach
         </tbody>
 
     </table>
 </div>
 
 @endsection
+

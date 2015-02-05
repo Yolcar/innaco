@@ -6,10 +6,10 @@
             <li role="presentation"><a href="{{ route('home') }}">Home</a></li>
         @endif
             {{--Tipo de Documento--}}
-            <li role="presentation"><a href="{{ route('type_document.index') }}">Tipo de Documento</a></li>
             <li role="presentation"><a href="{{ route('task.index') }}">Tareas</a></li>
             <li role="presentation"><a href="{{ route('template.index') }}">Plantillas</a></li>
-            <li role="presentation"><a href="{{ route('document.index') }}">Crear Documento</a></li>
+            <li role="presentation"><a href="{{ route('document.index') }}">Documentos</a></li>
+            <li role="presentation"><a href="{{ route('type_document.index') }}">Tipo de Documento</a></li>
             <li role="presentation"><a href="{{ route('workflow.index') }}">Tracking</a></li>
     </ul>
 </div>
