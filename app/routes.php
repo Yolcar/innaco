@@ -22,13 +22,15 @@
     Route::resource('task','taskController');
 
     Route::resource('template','templateController');
+    Route::get('template/{id}/step',['as' => 'steps', 'uses' => 'templateController@steps']);
+    Route::post('template/stepSave',['as' => 'stepsSave', 'uses' => 'templateController@stepsSave']);
 
-    Route::resource('document','DocumentController');
+
+    Route::resource('document','documentController');
+    Route::get('document/write/{id}',['as' => 'write','uses' => 'documentController@writeDocument']);
 
     Route::resource('workflow','WorkflowController');
 
-    Route::get('template/{id}/step',['as' => 'steps', 'uses' => 'templateController@steps']);
-    Route::post('template/stepSave',['as' => 'stepsSave', 'uses' => 'templateController@stepsSave']);
 
     Route::get('prueba',['as' => 'prueba', 'uses' => 'pruebaController@index']);
 

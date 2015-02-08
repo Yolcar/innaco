@@ -1,66 +1,50 @@
 @extends('layout')
-@extends('sidebar')
 @extends('navbar')
+@extends('sidebar')
 
 @section('head')
-    {{ HTML::script('ckeditor/ckeditor.js') }}
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    {{ HTML::script('js/app.js') }}
+    <script>
+        $(function() {
+            // setting up the datepicker
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy",
+                startDate: "now",
+                todayBtn: "linked",
+                language: "es",
+                orientation: "top auto",
+                autoclose: true
+            });
+        });
+    </script>
 @endsection
-
 @section('body')
 
-<h1 class="page-header">Crear Nuevo Documento</h1>
-
-{{ Form::open(['route' => 'task.store', 'method' => 'POST', 'role' => 'form']) }}
-
-<div class="form-group">
-    {{Form::label('name','Nombre')}}
-    {{Form::text('name')}}
-
-    @if($errors->has())
-        @foreach ($errors->all() as $error)
-            <div class="error_message">{{ $error }}</div>
-        @endforeach
-    @endif
-</div>
-
-<div class="form-group">
-    <a href="#" class="btn btn-success" data-toggle="modal" data-target="#basicModal">Tipo de Plantilla</a>
-</div>
-
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Selecciona la Plantilla</h4>
-            </div>
-            <div class="modal-body">
-
-                Realiza suma
-                <input type="button" href="javascript:;" onclick="realizaProceso($('#search').val());return false;" value="Calcula"/>
-                <br>
-                <span id="resultado"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Seleccionar</button>
-            </div>
-        </div>
-    </div>
-</div>
+    <h1 class="page-header">Crear Nueva Plantilla</h1>
 
 
+    {{ Form::open(['route' => 'document.store', 'method' => 'POST', 'role' => 'form']) }}
 
     <div class="form-group">
-        {{ Field::textarea('body','', ['class' => 'ckeditor']) }}
+        {{Form::hidden('template_id',$template->id,['id' => 'template_id'])}}
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            {{ Field::input('text','name',null,['id' => 'name']) }}
+        </div>
+        <label>Fecha de Ejecucion</label>
+        <div class=" col-lg-6 input-group date">
+            <input type="text" class="form-control" readonly><span class="input-group-addon"><i data-provide="datepicker" class="glyphicon glyphicon-th datepicker"></i></span>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        {{ Field::textarea('body',$template->body, ['class' => 'ckeditor']) }}
     </div>
 
-<p>
-    <input type="submit" value="Crear" class="btn btn-success">
-</p>
 
-{{Form::close()}}
+    <p>
+        <input type="submit" value="Crear" class="btn btn-success">
+    </p>
+
+    {{Form::close()}}
 
 @endsection

@@ -102,7 +102,8 @@ return array(
     */
 
     'attributes' => array(
-        'name'  => 'nombre'
+        'name'  => 'nombre',
+        'execute_date' => 'Fecha de Ejecucion'
     ),
 
 );

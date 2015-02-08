@@ -1,19 +1,18 @@
 <?php
 
 use Innaco\Repositories\DocumentRepo;
-use Innaco\Repositories\TypeDocumentRepo;
-use Innaco\Managers\DocumentManager;
+use Innaco\Repositories\TemplateRepo;
 
-class DocumentController extends \BaseController {
+class documentController extends \BaseController {
 
 
 	protected $documentRepo;
-	protected $typeDocumentRepo;
+	protected $templateRepo;
 
-	public function __construct(DocumentRepo $documentRepo, TypeDocumentRepo $typeDocumentRepo)
+	public function __construct(DocumentRepo $documentRepo, TemplateRepo $templateRepo)
 	{
 		$this->documentRepo = $documentRepo;
-		$this->typeDocumentRepo = $typeDocumentRepo;
+		$this->templateRepo = $templateRepo;
 	}
 
 	/**
@@ -43,12 +42,18 @@ class DocumentController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$typeDocuments = $this->typeDocumentRepo->search(Input::get('search'));
+			$templates = $this->templateRepo->search(Input::get('search'));
 		}
 		else{
-			$typeDocuments = $this->typeDocumentRepo->findAll(true);
+			$templates = $this->templateRepo->findAll(true);
 		}
-		return View::make('document.create',compact('typeDocuments'));
+		return View::make('document.selectTemplate',compact('templates'));
+	}
+
+	public function writeDocument($id)
+	{
+		$template = $this->templateRepo->find($id);
+		return View::make('document.create')->with('template', $template);
 	}
 
 
@@ -59,12 +64,7 @@ class DocumentController extends \BaseController {
 	 */
 	public function store()
 	{
-		$data = Input::all();
-		$template = $this->taskRepo->newTask();
-		$manager = new TaskManager($task, $data);
-		$manager->save();
 
-		return Redirect::route('task.index');
 	}
 
 
@@ -76,7 +76,7 @@ class DocumentController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+
 	}
 
 
@@ -88,8 +88,7 @@ class DocumentController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$task = $this->taskRepo->find($id);
-		return View::make('task.edit')->with('task',$task);
+
 	}
 
 
@@ -101,12 +100,7 @@ class DocumentController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$task = $this->taskRepo->find($id);
-		$data = Input::all();
-		$manager = new TaskManager($task, $data);
-		$manager->save();
 
-		return Redirect::route('task.index');
 	}
 
 
@@ -118,11 +112,6 @@ class DocumentController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$task = $this->taskRepo->find($id);
-
-		$task->delete();
-
-		return Redirect::route('task.index');
 
 	}
 
