@@ -11,7 +11,7 @@
 |
 */
 
-//Route::group(['before' => 'logged'], function () {
+Route::group(['before' => 'logged'], function () {
 
     Route::get('/',['as' => 'home', function(){
         return View::make('home');
@@ -28,7 +28,6 @@
 
     Route::resource('document','documentController');
     Route::get('document/write/{id}',['as' => 'write','uses' => 'documentController@writeDocument']);
-
     Route::resource('workflow','WorkflowController');
 
 
@@ -43,6 +42,6 @@
     //Route::get('template',['as' => 'template.index', 'uses' => 'TemplateController@index']);
     //Route::post('template',['as' => 'template.action', 'uses' => 'TemplateController@action']);
 
-//});
+});
 
 

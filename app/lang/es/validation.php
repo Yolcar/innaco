@@ -103,7 +103,9 @@ return array(
 
     'attributes' => array(
         'name'  => 'nombre',
-        'execute_date' => 'Fecha de Ejecucion'
+        'execute_date' => 'fecha de ejecucion',
+        'typedocuments_id' => 'tipo de tocumento',
+        'body' => 'de texto'
     ),
 
 );

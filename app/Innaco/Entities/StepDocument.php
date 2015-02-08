@@ -21,7 +21,7 @@ class stepDocument extends \Eloquent {
 	protected $fillable = ['templates_id','tasks_id', 'groups_id','order'];
 
 	public function template(){
-		return $this->belongsTo('Innaco\Entities\Template');
+		return $this->belongsTo('Innaco\Entities\Template','templates_id','id');
 	}
 
 	public function task(){

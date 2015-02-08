@@ -8,7 +8,7 @@ class WorkflowManager extends BaseManager{
             'documents_id' => 'required',
             'users_id' => 'required',
             'states_id' => 'required',
-            'stepdocuments_id'  => 'required'
+            'stepsdocuments_id'  => 'required'
         ];
 
         return $rules;

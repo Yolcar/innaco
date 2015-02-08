@@ -6,8 +6,8 @@
     <script>
         $(function() {
             // setting up the datepicker
-            $('.datepicker').datepicker({
-                format: "dd/mm/yyyy",
+            $('.input-group.date').datepicker({
+                format: "dd-mm-yyyy",
                 startDate: "now",
                 todayBtn: "linked",
                 language: "es",
@@ -25,16 +25,16 @@
     {{ Form::open(['route' => 'document.store', 'method' => 'POST', 'role' => 'form']) }}
 
     <div class="form-group">
-        {{Form::hidden('template_id',$template->id,['id' => 'template_id'])}}
+        {{Form::hidden('templates_id',$template->id,['id' => 'templates_id'])}}
     </div>
     <div class="col-lg-12">
         <div class="col-lg-6">
             {{ Field::input('text','name',null,['id' => 'name']) }}
         </div>
-        <label>Fecha de Ejecucion</label>
-        <div class=" col-lg-6 input-group date">
-            <input type="text" class="form-control" readonly><span class="input-group-addon"><i data-provide="datepicker" class="glyphicon glyphicon-th datepicker"></i></span>
+        <div class="input-group date">
+            {{ Field::input('datepicker','execute_date',null,['readonly']) }}
         </div>
+
     </div>
     <div class="col-lg-12">
         {{ Field::textarea('body',$template->body, ['class' => 'ckeditor']) }}

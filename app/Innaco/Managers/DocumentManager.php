@@ -8,8 +8,9 @@ class DocumentManager extends BaseManager{
         $rules = [
             'name' => 'required',
             'body' => 'required',
-            'execute_date'   =>  'requiered',
-            'templates_id' => 'required'
+            'execute_date'   =>  'required|date',
+            'templates_id' => 'required',
+            'serial' => 'required'
         ];
 
         return $rules;

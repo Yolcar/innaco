@@ -74,6 +74,8 @@ class FieldBuilder {
                 return $this->form->checkbox($name);
             case 'textarea':
                 return $this->form->textarea($name, $value, $attributes);
+            case 'datepicker':
+                return $this->form->input('text',$name,$value,$attributes);
             default:
                 return $this->form->input($type, $name, $value, $attributes);
         }

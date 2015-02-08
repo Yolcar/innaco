@@ -3,10 +3,10 @@
 
 class Workflow extends \Eloquent {
 
-	protected $fillable = ['document_id','users_id', 'state_id','stepdocument_id'];
+	protected $fillable = ['documents_id','users_id', 'states_id','stepsdocuments_id'];
 
 	public function document(){
-		return $this->belongsTo('Innaco\Entities\Document');
+		return $this->belongsTo('Innaco\Entities\Document','documents_id','id');
 	}
 
 	public function user(){

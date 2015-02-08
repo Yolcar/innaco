@@ -2,6 +2,7 @@
 
 use Innaco\Repositories\WorkflowRepo;
 use Innaco\Repositories\DocumentRepo;
+use Innaco\Repositories\StepDocumentRepo;
 use Innaco\Managers\WorkflowManager;
 
 class WorkflowController extends \BaseController {
@@ -9,11 +10,13 @@ class WorkflowController extends \BaseController {
 
 	protected $workflowRepo;
 	protected $documentRepo;
+    protected $stepDocumentRepo;
 
-	public function __construct(WorkflowRepo $workflowRepo,DocumentRepo $documentRepo)
+	public function __construct(WorkflowRepo $workflowRepo,DocumentRepo $documentRepo, StepDocumentRepo $stepDocumentRepo)
 	{
 		$this->workflowRepo = $workflowRepo;
 		$this->documentRepo = $documentRepo;
+        $this->stepDocumentRepo = $stepDocumentRepo;
 	}
 
 	/**
@@ -35,43 +38,31 @@ class WorkflowController extends \BaseController {
 
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Store a newly created resource in storage.
 	 *
 	 * @return Response
 	 */
 	public function create()
 	{
-		return View::make('document.create');
-	}
+        $documents_id = Input::get('documents_id');
+        $templates_id = Input::get('templates_id');
+        //$users_id = \Sentry::getUser()->id;
+        $stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$templates_id)->orderBy('order','asc')->get();
+        foreach ($stepDocuments as $stepDocument)
+        {
+            if ($stepDocument->task->name == 'Crear'){
+                $data = array('documents_id' => intval($documents_id),'states_id' => 3,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 1);
+            }
+            else {
+                $data = array('documents_id' => intval($documents_id),'states_id' => 1,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 0);
+            }
+            $workflow = $this->workflowRepo->newWorkflow();
+            $manager = new WorkflowManager($workflow, $data);
+            $manager->save();
+        }
 
-	public function selectTypeDocument()
-	{
-		if(Input::has('search'))
-		{
-			$typeDocument = $this->typeDocumentRepo->search(Input::get('search'));
-		}
-		else{
-			$typeDocument = $this->typeDocumentRepo->findAll(true);
-		}
-		return Response::json( array(
-			'datos' => $typeDocument,
-		));
-	}
+        return Redirect::route('document.index');
 
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		$data = Input::all();
-		$task = $this->taskRepo->newTask();
-		$manager = new TaskManager($task, $data);
-		$manager->save();
-
-		return Redirect::route('task.index');
 	}
 
 
@@ -85,10 +76,10 @@ class WorkflowController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$documents = $this->workflowRepo->search(Input::get('search'));
+			$workflow = $this->workflowRepo->search(Input::get('search'));
 		}
 		else{
-			$documents = $this->workflowRepo->findAll(true);
+            $workflow = $this->workflowRepo->findAll(true);
 		}
 		return View::make('workflow.show',compact('workflow'));
 	}
