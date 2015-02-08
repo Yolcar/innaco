@@ -17,6 +17,7 @@ Route::group(['before' => 'logged'], function () {
         return View::make('home');
     }]);
 
+	
     Route::resource('type_document','typeDocumentController');
 
     Route::resource('task','taskController');
