@@ -7,6 +7,7 @@
         function asignarID(id,name){
             document.getElementById("typedocuments_id").value = id;
             document.getElementById("name").value = name;
+            document.getElementById("typedocuments").click();
         }
     </script>
 @endsection
@@ -21,7 +22,7 @@
 {{ Form::open(['route' => 'template.store', 'method' => 'POST', 'role' => 'form']) }}
 
     <div class="form-group">
-        {{Form::hidden('typedocuments_id',"",['id' => 'typedocuments_id'])}}
+        {{ Field::input('hidden','typedocuments_id',null,['id' => 'typedocuments_id']) }}
     </div>
 
     {{ Field::input('text','name',"",['id' => 'name']) }}

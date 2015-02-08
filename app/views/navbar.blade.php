@@ -11,7 +11,6 @@
         </div>
 
         <div class="navbar-nav nav navbar-right">
-            {{--
             <li class="dropdown dropdown-user">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-profile">
                     @include('laravel-authentication-acl::admin.layouts.partials.avatar', ['size' => 30])
@@ -27,7 +26,6 @@
                     </li>
                 </ul>
             </li>
-            --}}
         </div><!-- nav-right -->
 
     </div>

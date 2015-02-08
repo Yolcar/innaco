@@ -14,9 +14,9 @@ class Document extends \Eloquent {
 	protected $searchable = [
 		'columns' => [
 			'serial' => 10,
+			'execute_date' => 10,
 			'name' => 5,
 			'body' => 1,
-			'execute_date' => 10,
 		],
 	];
 
@@ -27,7 +27,7 @@ class Document extends \Eloquent {
 	}
 
 	public function workflow(){
-		return $this->hasMany('Innaco\Entities\Workflow');
+		return $this->hasMany('Innaco\Entities\Workflow','documents_id','id');
 	}
 
 }

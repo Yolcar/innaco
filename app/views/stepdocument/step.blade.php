@@ -9,7 +9,7 @@
 @section('body')
     {{ Form::open(['route' => ['stepsSave'], 'method' => 'POST', 'role' => 'form']) }}
 
-    <h1 class="page-header">Asignacion de Pasos para: {{$template->name}}</h1>
+    <h1 class="page-header">Asignacion de pasos para {{$template->name}}</h1>
 
     <div class="form-group">
         {{ Form::hidden('templates_id',$template->id) }}
@@ -24,7 +24,7 @@
             <tr>
                 <th>Paso</th>
                 <th>Grupo Responsable</th>
-                <th>N° Orden</th>
+                <th>Nivel de Prioridad</th>
             </tr>
             @foreach($stepDocuments as $stepDocument)
                 <tr>
@@ -41,7 +41,7 @@
         <tr>
             <th width="20%" class="text-center">Paso</th>
             <th width="40%" class="text-center">Grupo Responsable</th>
-            <th width="10%" class="text-center">N° Orden</th>
+            <th width="10%" class="text-center">Nivel de Prioridad</th>
         </tr>
         </thead>
         <tbody>
@@ -52,7 +52,11 @@
                     {{Field::select('groups_id[]',$groups)}}
                 </td>
                 <td>
-                    {{Field::select('order[]',$totalSteps)}}
+                @if($step->name == 'Crear')
+                {{Form::text('order[]',1,['readonly'])}}
+                @else
+                {{Field::select('order[]',$totalSteps)}}
+                @endif
                 </td>
             </tr>
             @endforeach

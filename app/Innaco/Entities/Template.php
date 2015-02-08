@@ -29,7 +29,7 @@ class Template extends \Eloquent {
 	}
 
 	public function stepdocuments(){
-		return $this->hasMany('Innaco\Entities\StepDocument');
+		return $this->hasMany('Innaco\Entities\StepDocument','id','templates_id');
 	}
 
 
