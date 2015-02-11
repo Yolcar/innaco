@@ -7,23 +7,28 @@ class taskTableSeeder extends Seeder {
 	public function run()
 	{
 		Task::create([
-			'name' => 'Crear'
+			'name' => 'Crear',
+			'available' => '1'
 		]);
 
 		Task::create([
-			'name' => 'Revisar'
+			'name' => 'Revisar',
+			'available' => '1'
 		]);
 
 		Task::create([
-			'name' => 'Validar'
+			'name' => 'Validar',
+			'available' => '1'
 		]);
 
 		Task::create([
-			'name' => 'Autorizar'
+			'name' => 'Autorizar',
+			'available' => '1'
 		]);
 
 		Task::create([
-			'name' => 'Aprobar'
+			'name' => 'Aprobar',
+			'available' => '1'
 		]);
 
 	}

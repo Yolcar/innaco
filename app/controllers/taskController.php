@@ -2,15 +2,18 @@
 
 use Innaco\Repositories\TaskRepo;
 use Innaco\Managers\TaskManager;
+use Innaco\Repositories\StepDocumentRepo;
 
 class taskController extends \BaseController {
 
 
 	protected $taskRepo;
+	protected $stepDocumentRepo;
 
-	public function __construct(TaskRepo $taskRepo)
+	public function __construct(TaskRepo $taskRepo, StepDocumentRepo $stepDocumentRepo)
 	{
 		$this->taskRepo = $taskRepo;
+		$this->stepDocumentRepo = $stepDocumentRepo;
 	}
 
 	/**
@@ -22,10 +25,10 @@ class taskController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$tasks = $this->taskRepo->search(Input::get('search'));
+			$tasks = $this->taskRepo->getModel()->search(Input::get('search'))->where('available','=',1)->get();
 		}
 		else{
-			$tasks = $this->taskRepo->findAll(true);
+			$tasks = $this->taskRepo->getModel()->where('available','=',1)->paginate(20);
 		}
 		return View::make('task.list',compact('tasks'));
 	}
@@ -50,55 +53,13 @@ class taskController extends \BaseController {
 	public function store()
 	{
 		$data = Input::all();
+		$data += array('available' => 1);
 		$task = $this->taskRepo->newTask();
 		$manager = new TaskManager($task, $data);
 		$manager->save();
 
 		return Redirect::route('task.index');
 	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$task = $this->taskRepo->find($id);
-		return View::make('task.edit')->with('task',$task);
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$task = $this->taskRepo->find($id);
-		$data = Input::all();
-		$manager = new TaskManager($task, $data);
-		$manager->save();
-
-		return Redirect::route('task.index');
-	}
-
 
 	/**
 	 * Remove the specified resource from storage.
@@ -108,12 +69,15 @@ class taskController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$task = $this->taskRepo->find($id);
+		$stepDocument = $this->stepDocumentRepo->getModel()->where('tasks_id', '=' ,$id)->get();
 
-		$task->delete();
-
+		if($stepDocument->count()==0){
+			$task = $this->taskRepo->find($id);
+			$task->delete();
+		} else{
+			$this->taskRepo->getModel()->where('id','=',$id)->update(['available' => 0]);
+		}
 		return Redirect::route('task.index');
-
 	}
 
 

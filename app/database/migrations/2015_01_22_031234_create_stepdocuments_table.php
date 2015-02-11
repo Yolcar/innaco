@@ -19,6 +19,7 @@ class CreateStepdocumentsTable extends Migration {
 			$table->integer('tasks_id');
 			$table->integer('groups_id');
 			$table->integer('order');
+			$table->boolean('available');
 			$table->timestamps();
 		});
 	}

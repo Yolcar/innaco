@@ -18,7 +18,7 @@ class stepDocument extends \Eloquent {
 		],
 	];
 
-	protected $fillable = ['templates_id','tasks_id', 'groups_id','order'];
+	protected $fillable = ['templates_id','tasks_id', 'groups_id','order','available'];
 
 	public function template(){
 		return $this->belongsTo('Innaco\Entities\Template','templates_id','id');
@@ -33,7 +33,7 @@ class stepDocument extends \Eloquent {
 	}
 
 	public function workflow(){
-		return $this->hasMany('Innaco\Entities\Workflow');
+		return $this->hasMany('Innaco\Entities\Workflow','id','stepsdocuments_id');
 	}
 
 }

@@ -8,15 +8,18 @@ class TypeDocumentTableSeeder extends Seeder {
 	{
 
 		TypeDocument::create([
-			'name' => 'Constancia'
+			'name' => 'Constancia',
+			'available' => 1
 		]);
 
 		TypeDocument::create([
-			'name' => 'Memorandum'
+			'name' => 'Memorandum',
+			'available' => 1
 		]);
 
 		TypeDocument::create([
-			'name' => 'Solicitudes'
+			'name' => 'Solicitud',
+			'available' => 1
 		]);
 
 	}

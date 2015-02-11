@@ -12,7 +12,7 @@ class typeDocument extends \Eloquent {
 		],
 	];
 
-	protected $fillable = ['name'];
+	protected $fillable = ['name','available'];
 
 	public function template(){
 		return $this->hasMany('Innaco\Entities\Template');

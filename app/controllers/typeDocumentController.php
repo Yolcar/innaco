@@ -1,15 +1,18 @@
 <?php
 
 use Innaco\Repositories\TypeDocumentRepo;
+use Innaco\Repositories\TemplateRepo;
 use Innaco\Managers\TypeDocumentManager;
 
 class typeDocumentController extends \BaseController {
 
 	protected $typeDocumentRepo;
+	protected $templateRepo;
 
-	public function __construct(TypeDocumentRepo $typeDocumentRepo)
+	public function __construct(TypeDocumentRepo $typeDocumentRepo, TemplateRepo $templateRepo)
 	{
 		$this->typeDocumentRepo = $typeDocumentRepo;
+		$this->templateRepo = $templateRepo;
 	}
 
 	/**
@@ -21,12 +24,11 @@ class typeDocumentController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$typeDocuments = $this->typeDocumentRepo->search(Input::get('search'));
+			$typeDocuments = $this->typeDocumentRepo->getModel()->search(Input::get('search'))->where('available','=',1)->get();
 		}
 		else{
-			$typeDocuments = $this->typeDocumentRepo->findAll(true);
+			$typeDocuments = $this->typeDocumentRepo->getModel()->where('available','=',1)->paginate(20);
 		}
-
 		return View::make('typeDocument.list',compact('typeDocuments'));
 	}
 
@@ -50,36 +52,8 @@ class typeDocumentController extends \BaseController {
 	public function store()
 	{
 		$data = Input::all();
+		$data += array('available' => 1);
 		$typeDocument = $this->typeDocumentRepo->newTypeDocument();
-		$manager = new TypeDocumentManager($typeDocument, $data);
-		$manager->save();
-
-		return Redirect::route('type_document.index');
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		$type_document = $this->typeDocumentRepo->find($id);
-		return View::make('typeDocument.edit')->with('type_document',$type_document);
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		$typeDocument = $this->typeDocumentRepo->find($id);
-		$data = Input::all();
 		$manager = new TypeDocumentManager($typeDocument, $data);
 		$manager->save();
 
@@ -95,13 +69,17 @@ class typeDocumentController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$typeDocument = $this->typeDocumentRepo->find($id);
+		$template = $this->templateRepo->getModel()->where('typeDocuments_id', '=' ,$id)->get();
 
-		$typeDocument->delete();
+		if($template->count()==0){
+			$typeDocument = $this->typeDocumentRepo->find($id);
+			$typeDocument->delete();
+		} else{
+			$this->typeDocumentRepo->getModel()->where('id','=',$id)->update(['available' => 0]);
+		}
 
 		return Redirect::route('type_document.index');
 
 	}
-
 
 }

@@ -3,6 +3,7 @@
 use Innaco\Repositories\DocumentRepo;
 use Innaco\Repositories\TemplateRepo;
 use Innaco\Repositories\StepDocumentRepo;
+use Innaco\Repositories\WorkflowRepo;
 use Innaco\Managers\DocumentManager;
 
 class documentController extends \BaseController {
@@ -11,12 +12,14 @@ class documentController extends \BaseController {
 	protected $documentRepo;
 	protected $templateRepo;
     protected $stepDocumentRepo;
+	protected $workflowRepo;
 
-	public function __construct(DocumentRepo $documentRepo, TemplateRepo $templateRepo, StepDocumentRepo $stepDocumentRepo)
+	public function __construct(DocumentRepo $documentRepo, TemplateRepo $templateRepo, StepDocumentRepo $stepDocumentRepo, WorkflowRepo $workflowRepo)
 	{
 		$this->documentRepo = $documentRepo;
 		$this->templateRepo = $templateRepo;
         $this->stepDocumentRepo = $stepDocumentRepo;
+		$this->workflowRepo = $workflowRepo;
 	}
 
 	/**
@@ -70,15 +73,6 @@ class documentController extends \BaseController {
 	 */
 	public function create()
 	{
-		/**if(Input::has('search'))
-		{
-			$templates = $this->templateRepo->search(Input::get('search'));
-		}
-		else{
-			$templates = $this->templateRepo->findAll(true);
-		}
-		return View::make('document.selectTemplate',compact('templates'));*/
-
 		$user = \Sentry::getUser();
 		$user->getGroups();
 		$templates_id = $this->stepDocumentRepo->getModel()->select('templates_id')->distinct();
@@ -156,8 +150,6 @@ class documentController extends \BaseController {
 		else{ //si NO se encuenta la plantilla
 			return Response::view('errors.missing', array(), 404);
 		}
-
-		//return View::make('document.create')->with('template', $template);
 	}
 
 
@@ -168,17 +160,13 @@ class documentController extends \BaseController {
 	 */
 	public function store()
 	{
-        if(Input::has('execute_date'))
-        {
+        if(Input::has('execute_date')) {
             Input::merge(array('execute_date' => date("Y-m-d", strtotime(Input::get('execute_date')))));
         }
         $serial = $this->documentRepo->getModel()->where('templates_id','=',Input::get('templates_id'))->orderBy('serial','desc')->first();
-        if ($serial)
-        {
+        if ($serial) {
             $serial = $serial->serial+1;
-        }
-        else
-        {
+        } else {
             $serial = 1;
         }
         $data = Input::all();
@@ -200,7 +188,32 @@ class documentController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		$user = \Sentry::getUser();
+		$user->getGroups();
+		$templates_id = $this->stepDocumentRepo->getModel()->select('templates_id')->distinct();
+		$document = $this->documentRepo->find($id);
 
+
+		if($templates_id->count()!=0){
+			foreach($user->groups as $group)
+			{
+				$templates_id->orWhere('groups_id','=',$group->id);
+			}
+			if($templates_id->count()!=0){
+				$templates_id = $templates_id->get();
+				foreach ($templates_id as $template_id) {
+					if ($document->templates_id == $template_id->templates_id){
+						return View::make('document.show')->with('document',$document);
+					}
+				}
+				return Response::view('errors.missing', array(), 404);
+			}
+			else{
+				return Response::view('errors.missing', array(), 404);
+			}
+		} else{
+			return Response::view('errors.missing', array(), 404);
+		}
 	}
 
 
@@ -212,7 +225,27 @@ class documentController extends \BaseController {
 	 */
 	public function edit($id)
 	{
+		$user = \Sentry::getUser();
+		$workflows = $this->workflowRepo->getModel()->where('documents_id','=',$id)->where('users_id','=',intval($user->getId()))->get()->first();
+		$workflowsNext = $this->workflowRepo->getModel()->where('id','=',$workflows->id+1)->where('documents_id','=',$id)->get()->first();
 
+		if ($workflows){
+			if ($workflowsNext){
+				if($workflows->documents_id==$id and $workflowsNext->users_id==0){
+					$document = $this->documentRepo->find($id);
+					return View::make('document.edit')->with('document',$document);
+				} else {
+					return Response::view('errors.missing', array(), 404);
+				}
+			} elseif ($workflows->documents_id==$id) {
+				$document = $this->documentRepo->find($id);
+				return View::make('document.edit')->with('document',$document);
+			}else {
+				return Response::view('errors.missing', array(), 404);
+			}
+		} else {
+			return Response::view('errors.missing', array(), 404);
+		}
 	}
 
 
@@ -224,23 +257,17 @@ class documentController extends \BaseController {
 	 */
 	public function update($id)
 	{
-
+		if(Input::has('execute_date'))
+		{
+			Input::merge(array('execute_date' => date("Y-m-d", strtotime(Input::get('execute_date')))));
+		}
+		$serial = $this->documentRepo->getModel()->where('templates_id','=',Input::get('templates_id'))->orderBy('serial','desc')->first();
+		$data = Input::all();
+		$data += array('serial' => $serial);
+		$document = $this->documentRepo->find($id);
+		$manager = new DocumentManager($document, $data);
+		$manager->save();
+		return Redirect::route('document.index');
 	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-
-        $this->documentRepo->destroy($id,'id');
-        return Redirect::route('document.index');
-
-	}
-
 
 }

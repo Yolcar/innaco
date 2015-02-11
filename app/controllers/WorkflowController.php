@@ -46,16 +46,30 @@ class WorkflowController extends \BaseController {
 	{
         $documents_id = Input::get('documents_id');
         $templates_id = Input::get('templates_id');
-        //$users_id = \Sentry::getUser()->id;
-        $stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$templates_id)->orderBy('order','asc')->get();
-        foreach ($stepDocuments as $stepDocument)
+        $stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$templates_id)->where('available','=',1)->orderBy('order','asc')->get();
+        $i = 1;
+		$flag = false;
+		foreach ($stepDocuments as $stepDocument)
         {
-            if ($stepDocument->task->name == 'Crear'){
-                $data = array('documents_id' => intval($documents_id),'states_id' => 3,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 1);
+            if ($stepDocument->task->id == 1){
+                $data = array('documents_id' => intval($documents_id),'states_id' => 3,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => \Sentry::getUser()->getId());
             }
-            else {
-                $data = array('documents_id' => intval($documents_id),'states_id' => 1,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 0);
-            }
+			elseif($stepDocument->order == $i and $flag == false){
+				$flag = true;
+				$data = array('documents_id' => intval($documents_id),'states_id' => 2,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 0);
+			}
+			elseif($stepDocument->order == $i and $flag==true) {
+				$data = array('documents_id' => intval($documents_id),'states_id' => 2,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 0);
+			}
+			elseif($stepDocument->order == $i+1 and $flag==false){
+				$i++;
+				$flag = true;
+				$data = array('documents_id' => intval($documents_id),'states_id' => 2,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 0);
+			}
+			else {
+				$i++;
+				$data = array('documents_id' => intval($documents_id),'states_id' => 1,'stepsdocuments_id' => intval($stepDocument->id),'users_id' => 0);
+			}
             $workflow = $this->workflowRepo->newWorkflow();
             $manager = new WorkflowManager($workflow, $data);
             $manager->save();
@@ -74,14 +88,8 @@ class WorkflowController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		if(Input::has('search'))
-		{
-			$workflow = $this->workflowRepo->search(Input::get('search'));
-		}
-		else{
-            $workflow = $this->workflowRepo->findAll(true);
-		}
-		return View::make('workflow.show',compact('workflow'));
+		$workflows = $this->workflowRepo->getModel()->where('documents_id','=',$id)->get();
+		return View::make('workflow.show',compact('workflows'));
 	}
 
 

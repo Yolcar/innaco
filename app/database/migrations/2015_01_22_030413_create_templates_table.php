@@ -18,6 +18,7 @@ class CreateTemplatesTable extends Migration {
 			$table->string('name');
 			$table->text('body');
 			$table->integer('typedocuments_id');
+			$table->boolean('available');
 			$table->timestamps();
 		});
 	}

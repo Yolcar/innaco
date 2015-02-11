@@ -18,14 +18,14 @@ class Template extends \Eloquent {
 		],
 	];
 
-	protected $fillable = ['name', 'body','typedocuments_id'];
+	protected $fillable = ['name', 'body','typedocuments_id','available'];
 
 	public function documents(){
-		return $this->hasMany('Innaco\Entities\Document');
+		return $this->hasMany('Innaco\Entities\Document','id','templates_id');
 	}
 
 	public function typedocuments(){
-		return $this->belongsTo('Innaco\Entities\TypeDocument');
+		return $this->belongsTo('Innaco\Entities\TypeDocument','typedocuments_id','id');
 	}
 
 	public function stepdocuments(){

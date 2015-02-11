@@ -28,17 +28,24 @@
                 <td>
                     {{ Form::open(['route' => ['document.destroy', $document->id ], 'method' => 'DELETE']) }}
                     @if($document->workflow->first()->users_id == \Sentry::getUser()->getId())
-                        @if($document->workflow->find($document->workflow->first()->id+1)->users_id == 0)
+                        @if($document->workflow->count() > 1)
+                            @if($document->workflow->find($document->workflow->first()->id+1)->users_id == 0)
+                                <a class="btn btn-success" href="{{Route('document.edit', $document->id)}}">
+                                    Editar
+                                </a>
+                            @endif
+                        @else
                             <a class="btn btn-success" href="{{Route('document.edit', $document->id)}}">
                                 Editar
                             </a>
                         @endif
                     @endif
+                    <a class="btn btn-success" href="{{Route('document.show', $document->id)}}">
+                        Mostrar
+                    </a>
                     <a class="btn btn-success" href="#">
                         Reparar
                     </a>
-                        {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger']) }}
-                    {{ Form::close() }}
                 </td>
 
             </tr>

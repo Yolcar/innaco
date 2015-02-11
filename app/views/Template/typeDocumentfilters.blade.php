@@ -2,17 +2,17 @@
 <h3>Seleccione el Tipo de Documento</h3>
 <div class="span4"><button id="typedocuments" type="button" class="btn btn-info" data-toggle="collapse" data-target="#myDiv" data-open-text="Ocultar">Mostrar</button></div>
 <script>
-        $("[type=button]").button();
-        $("[type=button]").click(function(){
-            $(this).button('toggle');
-            if ($(this).text()==="Mostrar"){
-                $(this).button('open');
-            }
-            else {
-                $(this).button('reset');
-            }
-        });
-    </script>
+    $("[type=button]").button();
+    $("[type=button]").click(function(){
+        $(this).button('toggle');
+        if ($(this).text()==="Mostrar"){
+            $(this).button('open');
+        }
+        else {
+            $(this).button('reset');
+        }
+    });
+</script>
 <div class="span4 collapse" id="myDiv">
 {{ Form::open(['route' => 'template.create', 'method' => 'GET']) }}
 

@@ -21,6 +21,6 @@ class State extends \Eloquent {
 	protected $fillable = ['name'];
 
 	public function workflow(){
-		return $this->hasMany('Innaco\Entities\Workflow');
+		return $this->hasMany('Innaco\Entities\Workflow','states_id','id');
 	}
 }

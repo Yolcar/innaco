@@ -4,6 +4,8 @@ use Innaco\Repositories\TemplateRepo;
 use Innaco\Repositories\TypeDocumentRepo;
 use Innaco\Repositories\StepDocumentRepo;
 use Innaco\Repositories\TaskRepo;
+use Innaco\Repositories\WorkflowRepo;
+use Innaco\Repositories\DocumentRepo;
 use Innaco\Managers\TemplateManager;
 use Innaco\Managers\StepDocumentManager;
 
@@ -14,13 +16,19 @@ class templateController extends \BaseController {
 	protected $typeDocumentRepo;
 	protected $stepDocumentRepo;
 	protected $taskRepo;
+	protected $workflowRepo;
+	protected $documentRepo;
 
-	public function __construct(TemplateRepo $templateRepo, TypeDocumentRepo $typeDocumentRepo, StepDocumentRepo $stepDocumentRepo, TaskRepo $taskRepo)
+	public function __construct(TemplateRepo $templateRepo, TypeDocumentRepo $typeDocumentRepo,
+								StepDocumentRepo $stepDocumentRepo, TaskRepo $taskRepo, WorkflowRepo $workflowRepo,
+								DocumentRepo $documentRepo)
 	{
 		$this->templateRepo = $templateRepo;
 		$this->typeDocumentRepo = $typeDocumentRepo;
 		$this->stepDocumentRepo = $stepDocumentRepo;
 		$this->taskRepo = $taskRepo;
+		$this->workflowRepo = $workflowRepo;
+		$this->documentRepo = $documentRepo;
 	}
 
 	/**
@@ -32,10 +40,10 @@ class templateController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$templates = $this->templateRepo->search(Input::get('search'));
+			$templates = $this->templateRepo->getModel()->search(Input::get('search'))->where('available','=',1);
 		}
 		else{
-			$templates = $this->templateRepo->findAll(true);
+			$templates = $this->templateRepo->getModel()->where('available','=',1)->paginate(20);
 		}
 		return View::make('template.list',compact('templates'));
 	}
@@ -67,6 +75,7 @@ class templateController extends \BaseController {
 	public function store()
 	{
 		$data = Input::all();
+		$data += array('available' => 1);
 		$template = $this->templateRepo->newTemplate();
 		$manager = new TemplateManager($template, $data);
 		$manager->save();
@@ -84,18 +93,25 @@ class templateController extends \BaseController {
 	public function show($id)
 	{
 		$template = $this->templateRepo->find($id);
-		return View::make('template.show')->with('template',$template);
+		if($template->available == 1){
+			return View::make('template.show')->with('template',$template);
+		}else{
+			return Response::view('errors.missing', array(), 404);
+		}
 	}
 
 	public function steps($id)
 	{
 		$template = $this->templateRepo->find($id);
-		$steps = $this->taskRepo->findAll();
-		$groups = DB::table('groups')->orderBy('id','asc')->lists('name','id');
-		$totalSteps = $this->taskRepo->getModel()->orderBy('id','asc')->lists('id','id');
-		$stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$id)->get();
-
-		return View::make('stepdocument.step',compact('steps','groups','stepDocuments'))->with('template',$template)->with('totalSteps',$totalSteps);
+		if($template->available == 1){
+			$steps = $this->taskRepo->findAll();
+			$groups = DB::table('groups')->orderBy('id','asc')->lists('name','id');
+			$totalSteps = $this->taskRepo->getModel()->orderBy('id','asc')->lists('id','id');
+			$stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$id)->where('available','=',1)->get();
+			return View::make('stepdocument.step',compact('steps','groups','stepDocuments'))->with('template',$template)->with('totalSteps',$totalSteps);
+		}else{
+			return Response::view('errors.missing', array(), 404);
+		}
 	}
 
 	public function stepsSave()
@@ -105,15 +121,21 @@ class templateController extends \BaseController {
 		$tasks_id = Input::get('tasks_id');
 		$order = Input::get('order');
 
-		$tasks = DB::table('step_documents')->where('templates_id', '=' ,$template_id)->get();
+		$stepDocument = $this->stepDocumentRepo->getModel()->where('templates_id', '=' ,$template_id)->get();
 
-		foreach($tasks as $task){
-			DB::table('step_documents')->delete($task->id);
+
+		foreach($stepDocument as $temp){
+			$workflows = $this->workflowRepo->getModel()->where('stepsdocuments_id','=',$temp->id)->get()->first();
+			if ($workflows){
+				$this->stepDocumentRepo->getModel()->where('id','=',$temp->id)->update(['available' => 0]);
+			}else{
+				$this->stepDocumentRepo->getModel()->where('id','=',$temp->id)->delete();
+			}
 		}
 
 		foreach ($tasks_id as $key => $n) {
 			if($groups_id[$key] !=NULL AND $order[$key]!=NULL){
-				$arrData = array('templates_id' => $template_id, 'tasks_id' => $tasks_id[$key], 'groups_id' => $groups_id[$key], 'order' => $order[$key]);
+				$arrData = array('templates_id' => $template_id, 'tasks_id' => $tasks_id[$key], 'groups_id' => $groups_id[$key], 'order' => $order[$key],'available' => 1);
 				$stepDocument = $this->stepDocumentRepo->newStepDocument();
 				$manager = new StepDocumentManager($stepDocument, $arrData);
 				$manager->save();
@@ -133,7 +155,11 @@ class templateController extends \BaseController {
 	public function edit($id)
 	{
 		$template = $this->templateRepo->find($id);
-		return View::make('template.edit')->with('template',$template);
+		if($template->available == 1){
+			return View::make('template.edit')->with('template',$template);
+		}else{
+			return Response::view('errors.missing', array(), 404);
+		}
 	}
 
 
@@ -163,10 +189,24 @@ class templateController extends \BaseController {
 	public function destroy($id)
 	{
 		$template = $this->templateRepo->find($id);
-
-		$template->delete();
-
-		return Redirect::route('template.index');
+		if($template->available == 1){
+			$documents = $this->documentRepo->getModel()->where('templates_id','=',$id)->get();
+			$stepdocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$id)->get();
+			if($documents->count()==0){
+				$template->delete();
+				foreach($stepdocuments as $stepdocument){
+					$stepdocument->delete();
+				}
+			}else{
+				$this->templateRepo->getModel()->where('id','=',$id)->update(['available' => 0]);
+				foreach($stepdocuments as $stepdocument){
+					$this->stepDocumentRepo->getModel()->where('id','=',$id)->update(['available' => 0]);
+				}
+			}
+			return Redirect::route('template.index');
+		}else{
+			return Response::view('errors.missing', array(), 404);
+		}
 
 	}
 

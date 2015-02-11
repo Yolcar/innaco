@@ -5,7 +5,7 @@ class StateManager extends BaseManager{
     public function getRules()
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required|unique:states'
         ];
 
         return $rules;

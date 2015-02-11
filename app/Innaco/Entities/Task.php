@@ -17,9 +17,9 @@ class Task extends \Eloquent {
 		],
 	];
 
-	protected $fillable = ['name'];
+	protected $fillable = ['name','available'];
 
 	public function stepDocument(){
-		return $this->hasMany('Innaco\Entities\StepDocument');
+		return $this->hasMany('Innaco\Entities\StepDocument','tasks_id','id');
 	}
 }
