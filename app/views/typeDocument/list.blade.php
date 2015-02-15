@@ -5,7 +5,7 @@
 @section('body')
     <h1 class="page-header">Tipos de Documentos</h1>
 <p>
-    <a class="btn btn-info" href="{{Route('type_document.create')}}">Crear Tipo</a>
+    <a class="btn btn-custom-create" href="{{Route('type_document.create')}}">Crear Tipo</a>
 </p>
 
     <h3>Se encontraron {{$typeDocuments->getTotal()}} Tipos de Documentos.</h3>
@@ -22,14 +22,15 @@
         <tbody>
         @foreach($typeDocuments as $typeDocument)
             <tr>
-                <td class="name">{{$typeDocument->name}}</td>
+                <td width="70%" class="name">{{$typeDocument->name}}</td>
                 <td>
-                    {{ Form::open(['route' => ['type_document.destroy', $typeDocument->id ], 'method' => 'DELETE']) }}
-                    <a class="btn btn-success" href="{{Route('type_document.edit', $typeDocument->id)}}">
-                        Editar
-                    </a>
-                        {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger']) }}
-                    {{ Form::close() }}
+                    @if($typeDocument->template->count()> 0)
+                        <a href="#" class="btn btn-custom-disable">Desactivar</a>
+                    @else
+                        {{ Form::open(['route' => ['type_document.destroy', $typeDocument->id ], 'method' => 'DELETE']) }}
+                        {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-custom-delete']) }}
+                        {{ Form::close() }}
+                    @endif
                 </td>
 
             </tr>

@@ -20,8 +20,8 @@ class Template extends \Eloquent {
 
 	protected $fillable = ['name', 'body','typedocuments_id','available'];
 
-	public function documents(){
-		return $this->hasMany('Innaco\Entities\Document','id','templates_id');
+	public function document(){
+		return $this->hasMany('Innaco\Entities\Document','templates_id','id');
 	}
 
 	public function typedocuments(){

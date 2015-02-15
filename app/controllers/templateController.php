@@ -103,16 +103,48 @@ class templateController extends \BaseController {
 	public function steps($id)
 	{
 		$template = $this->templateRepo->find($id);
+
+        $totalSteps = array();
+
+        for($i=1; $i <= $this->taskRepo->getModel()->count();$i++){
+            $totalSteps[$i]=$i;
+        }
+
 		if($template->available == 1){
 			$steps = $this->taskRepo->findAll();
 			$groups = DB::table('groups')->orderBy('id','asc')->lists('name','id');
-			$totalSteps = $this->taskRepo->getModel()->orderBy('id','asc')->lists('id','id');
 			$stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$id)->where('available','=',1)->get();
 			return View::make('stepdocument.step',compact('steps','groups','stepDocuments'))->with('template',$template)->with('totalSteps',$totalSteps);
 		}else{
 			return Response::view('errors.missing', array(), 404);
 		}
 	}
+
+	public function activation()
+	{
+		if(Input::has('search'))
+		{
+			$templates = $this->templateRepo->getModel()->search(Input::get('search'))->where('available','=',0);
+		}
+		else{
+			$templates = $this->templateRepo->getModel()->where('available','=',0)->paginate(20);
+		}
+		return View::make('template.activation',compact('templates'));
+	}
+
+	public function active($id){
+		$template = $this->templateRepo->find($id);
+		$stepDocuments = $this->stepDocumentRepo->getModel()->where('templates_id','=',$id)->where('available','=',0)->get();
+
+		foreach ($stepDocuments as $stepDocument){
+			$this->stepDocumentRepo->getModel()->where('id','=',$stepDocument->id)->update(['available' => 1]);
+		}
+		$template->update(['available' => 1]);
+		return Redirect::route('activation');
+
+	}
+
+
 
 	public function stepsSave()
 	{

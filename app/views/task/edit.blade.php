@@ -20,7 +20,7 @@
     </div>
 
     <p>
-        <input type="submit" value="Modificar" class="btn btn-success">
+        <input type="submit" value="Modificar" class="btn btn-custom-edit">
     </p>
 
     {{Form::close()}}

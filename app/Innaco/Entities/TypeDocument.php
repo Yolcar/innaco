@@ -15,6 +15,6 @@ class typeDocument extends \Eloquent {
 	protected $fillable = ['name','available'];
 
 	public function template(){
-		return $this->hasMany('Innaco\Entities\Template');
+		return $this->hasMany('Innaco\Entities\Template','typedocuments_id','id');
 	}
 }

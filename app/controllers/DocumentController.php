@@ -79,7 +79,7 @@ class documentController extends \BaseController {
 
 		if(Input::has('search'))
 		{
-			$templates = $this->templateRepo->getModel()->search(Input::get('search'));
+			$templates = $this->templateRepo->getModel()->search(Input::get('search'),0);
 		}
 		else{
 			$templates = $this->templateRepo->getModel();
@@ -94,7 +94,7 @@ class documentController extends \BaseController {
 			if($templates_id->count()!=0){
 				$templates_id = $templates_id->get();
 				foreach ($templates_id as $template_id) {
-					$templates = $templates->orWhere('id','=',$template_id->templates_id);
+					$templates = $templates->orWhere('id','=',$template_id->templates_id)->where('available','=',1);
 				}
 				$templates = $templates->paginate(20);
 				return View::make('document.selectTemplate',compact('templates'));

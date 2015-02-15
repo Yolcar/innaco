@@ -24,14 +24,19 @@ Route::group(['before' => 'logged'], function () {
     Route::resource('template','templateController');
     Route::get('template/{id}/step',['as' => 'steps', 'uses' => 'templateController@steps']);
     Route::post('template/stepSave',['as' => 'stepsSave', 'uses' => 'templateController@stepsSave']);
+    Route::get('template/active/new',['as'=> 'activation','uses'=>'templateController@activation']);
+    Route::post('template/active/{id}',['as' => 'templateActive','uses' => 'templateController@active']);
 
 
     Route::resource('document','documentController');
     Route::get('document/write/{id}',['as' => 'write','uses' => 'documentController@writeDocument']);
-    Route::resource('workflow','WorkflowController');
 
 
-    Route::get('prueba',['as' => 'prueba', 'uses' => 'pruebaController@index']);
+    Route::get('document/{id}/workflow',['as' => 'workflow.show', 'uses' => 'workflowController@show']);
+    Route::get('document/{idDocument}/workflow/{idWorkflow}',['as' => 'workflow.action', 'uses' => 'workflowController@action']);
+    Route::post('document/{idDocument}/workflows/{idWorkflow}',['as' => 'workflow.update', 'uses' => 'workflowController@update']);
+    Route::get('workflow/create',['as' => 'workflow.create', 'uses' => 'workflowController@create']);
+    //Route::resource('workflow','WorkflowController');
 
 
     //Tipos de Documentos

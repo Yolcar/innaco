@@ -5,7 +5,8 @@
 @section('body')
     <h1 class="page-header">Plantillas</h1>
 <p>
-    <a class="btn btn-info" href="{{Route('template.create')}}">Crear Plantillas</a>
+    <a class="btn btn-custom-create" href="{{Route('template.create')}}">Crear Plantillas</a>
+    <a class="btn btn-custom-active" href="{{Route('activation')}}">Re-Activar</a>
 </p>
 
     <h3>Se encontraron {{$templates->getTotal()}} Plantillas.</h3>
@@ -27,19 +28,22 @@
                 <td class="name">{{$template->name}}</td>
                 <td>
                     {{ Form::open(['route' => ['template.destroy', $template->id ], 'method' => 'DELETE']) }}
-                    <a class="btn btn-info" href="{{ Route('steps', $template->id) }}">
+                    <a class="btn btn-custom-step" href="{{ Route('steps', $template->id) }}">
                         Asignar Pasos
                     </a>
-                    <a class="btn btn-primary" href="{{ Route('template.show', $template->id) }}">
+                    <a class="btn btn-custom-show" href="{{ Route('template.show', $template->id) }}">
                         Mostrar
                     </a>
-                    <a class="btn btn-success" href="{{Route('template.edit', $template->id)}}">
+                    <a class="btn btn-custom-edit" href="{{Route('template.edit', $template->id)}}">
                         Editar
                     </a>
-                    {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-danger']) }}
+                    @if($template->document->count() > 0)
+                        {{ Form::button('Desactivar', ['type' => 'submit', 'class' => 'btn btn-custom-disable']) }}
+                    @else
+                        {{ Form::button('Eliminar', ['type' => 'submit', 'class' => 'btn btn-custom-delete']) }}
+                    @endif
                     {{ Form::close() }}
                 </td>
-
             </tr>
         @endforeach
         </tbody>

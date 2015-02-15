@@ -63,8 +63,8 @@
         </tbody>
     </table>
     <p>
-        <a href="{{Route('template.index')}}" class="btn btn-danger">Atras</a>
-        <input type="submit" value="Asignar" class="btn btn-success">
+        <a href="{{Route('template.index')}}" class="btn btn-custom-back">Atras</a>
+        <input type="submit" value="Asignar Pasos" class="btn btn-custom-create">
     </p>
     {{Form::close()}}
 

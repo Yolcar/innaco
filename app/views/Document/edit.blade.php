@@ -42,7 +42,7 @@
 
 
     <p>
-        <input type="submit" value="Crear" class="btn btn-success">
+        <input type="submit" value="Editar" class="btn btn-custom-edit">
     </p>
 
     {{Form::close()}}

@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'task.index', 'method' => 'GET']) }}
+{{ Form::open(['route' => 'activation', 'method' => 'GET']) }}
 
     {{ Form::text('search') }}
     {{ Form::button('Buscar',['type' => 'submit', 'class' => 'btn btn-custom-search']) }}

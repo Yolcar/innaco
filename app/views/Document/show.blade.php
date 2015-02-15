@@ -7,19 +7,19 @@
 @endsection
 
 @section('body')
-    {{ Form::model($template,['route' => ['template.index'], 'method' => 'GET', 'role' => 'form']) }}
-
-    <h1 class="page-header">Informacion de la Plantilla: {{$template->name}}</h1>
+    {{ Form::model($document,['route' => ['document.index'], 'method' => 'GET', 'role' => 'form']) }}
 
     <div class="form-group text-center">
+        <h1>Informacion del documento</h1>
+        <h1 class="page-header">{{$document->name}}</h1>
     <br>
     <div class="col-lg-12">
-        {{$template->body}}
+        {{$document->body}}
         <br>
         <br>
     </div>
     <p>
-        <input type="submit" value="Atras" class="btn btn-custom-back">
+        <input type="submit" value="Volver" class="btn btn-custom-back">
     </p>
     </div>
 

@@ -25,7 +25,7 @@ class taskController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$tasks = $this->taskRepo->getModel()->search(Input::get('search'))->where('available','=',1)->get();
+			$tasks = $this->taskRepo->getModel()->search(Input::get('search'))->where('available','=',1)->paginate(20);
 		}
 		else{
 			$tasks = $this->taskRepo->getModel()->where('available','=',1)->paginate(20);

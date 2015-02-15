@@ -3,13 +3,15 @@
 @extends('navbar')
 
 @section('body')
-<h1 class="page-header">Tracking del Documento</h1>
+<h1 class="text-center">Estado del Documento</h1>
+<h3 class="page-header text-center">{{$document->name}}</h3>
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Tracking</th>
-            <th>Responsable</th>
+            <th>Autor</th>
+            <th>Grupo Responsable</th>
             <th>Estado</th>
             <th>Gestion</th>
         </tr>
@@ -24,17 +26,22 @@
                 @else
                     <td>{{$workflow->user->email}}</td>
                 @endif
+                <td>{{$workflow->stepdocument->group->name}}</td>
                 <td>{{$workflow->state->name}}</td>
                 @if($workflow->state->id == 2)
-                   <td><a class="btn btn-info" href="#">Gestionar</a></td>
+                    @if(\Sentry::getUser()->inGroup(Sentry::findGroupByName($workflow->stepdocument->group->name)))
+                   <td><a class="btn btn-custom-step" href="{{Route('workflow.action',[$workflow->documents_id,$workflow->id])}}">Gestionar</a></td>
+                    @else
+                        <td></td>
+                    @endif
                 @else
                     <td> </td>
                 @endif
             </tr>
         @endforeach
         </tbody>
-
     </table>
+    <a href="{{Route('document.index')}}" class="btn btn-custom-back">Volver</a>
 </div>
 
 @endsection
