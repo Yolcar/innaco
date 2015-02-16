@@ -24,9 +24,7 @@
 						<td>{{$document->name}}</td>
 						<td>{{$document->created_at}}</td>
 						<td>
-							<a href="{{Route('workflow.show',$document->id)}}" class="btn btn-info">
-								Ver Tracking
-							</a>
+							<a href="{{Route('workflow.show',$document->id)}}" class="btn btn-info" data-toggle="popover" data-content="Abre una ventana que mostrara la información del Documento y actividades a realizarle." data-original-title="Ver Tracking">Ver Tracking</a>
 						</td>
 					</tr>
 				@endforeach

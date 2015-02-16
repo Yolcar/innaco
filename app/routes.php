@@ -20,11 +20,13 @@ Route::group(['before' => 'logged'], function () {
     Route::resource('type_document','typeDocumentController');
 
     Route::resource('task','taskController');
+    Route::get('task/active/new',['as'=> 'taskActivation','uses'=>'taskController@activation']);
+    Route::post('task/active/{id}',['as' => 'taskActive','uses' => 'taskController@active']);
 
     Route::resource('template','templateController');
     Route::get('template/{id}/step',['as' => 'steps', 'uses' => 'templateController@steps']);
     Route::post('template/stepSave',['as' => 'stepsSave', 'uses' => 'templateController@stepsSave']);
-    Route::get('template/active/new',['as'=> 'activation','uses'=>'templateController@activation']);
+    Route::get('template/active/new',['as'=> 'templateActivation','uses'=>'templateController@activation']);
     Route::post('template/active/{id}',['as' => 'templateActive','uses' => 'templateController@active']);
 
 
@@ -38,8 +40,12 @@ Route::group(['before' => 'logged'], function () {
     Route::get('workflow/create',['as' => 'workflow.create', 'uses' => 'workflowController@create']);
     //Route::resource('workflow','WorkflowController');
 
+    Route::get('typedocument/active/new',['as'=> 'typedocumentActivation','uses'=>'typeDocumentController@activation']);
+    Route::post('typedocument/active/{id}',['as' => 'typedocumentActive','uses' => 'typeDocumentController@active']);
 
-    //Tipos de Documentos
+
+   // Tipos de Documentos
+
     //Route::get('type_document',['as' => 'typedocument.index', 'uses' => 'TypeDocumentController@index']);
     //Route::post('type_document',['as' => 'typedocument.action', 'uses' => 'TypeDocumentController@action']);
 

@@ -24,8 +24,17 @@
 	{{ HTML::script('js/bootstrap-datepicker.js') }}
 	{{ HTML::script('js/locales/bootstrap-datepicker.es.js') }}
 
+	<script>
+		$(function (){
+			$('[data-toggle="popover"]').popover({
+				trigger: 'hover',
+				'placement': 'top'
+			});
+		});
+	</script>
 
 	@yield('head')
+
 </head>
 
 <body>

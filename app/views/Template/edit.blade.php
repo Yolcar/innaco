@@ -20,7 +20,8 @@
     {{ Field::textarea('body',null) }}
 
     <p>
-        <input type="submit" value="Modificar" class="btn btn-custom-edit">
+        <a href="{{Route('template.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Regresa a la pagina anterior de lista de plantillas" data-original-title="Atras">Atras</a>
+        <input type="submit" value="Modificar" class="btn btn-custom-edit" data-toggle="popover" data-content="Permite modificar la Plantilla con los datos antes descritos" data-original-title="Modificar">
     </p>
 
     {{Form::close()}}

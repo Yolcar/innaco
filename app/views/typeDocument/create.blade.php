@@ -21,8 +21,10 @@
     </div>
 
 <p>
-    <input type="submit" value="Crear" class="btn btn-custom-create">
+    <a href="{{Route('type_document.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Permite volver a la lista de los tipos de documentos creados" data-original-title="Atras">Atras</a>
+    <input type="submit" value="Crear" class="btn btn-custom-create" data-toggle="popover" data-content="Permite Crear los Nuevos tipos de documentos." data-original-title="Crear Tipo">
 </p>
+
 
 {{Form::close()}}
 

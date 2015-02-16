@@ -19,7 +19,7 @@
         <br>
     </div>
     <p>
-        <input type="submit" value="Atras" class="btn btn-custom-back">
+        <input type="submit" value="Atras" class="btn btn-custom-back" data-toggle="popover" data-content="Regresa a la pagina anterior de lista de plantillas" data-original-title="Atras">
     </p>
     </div>
 

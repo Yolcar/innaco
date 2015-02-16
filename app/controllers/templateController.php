@@ -140,7 +140,7 @@ class templateController extends \BaseController {
 			$this->stepDocumentRepo->getModel()->where('id','=',$stepDocument->id)->update(['available' => 1]);
 		}
 		$template->update(['available' => 1]);
-		return Redirect::route('activation');
+		return Redirect::route('templateActivation');
 
 	}
 

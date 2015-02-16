@@ -63,8 +63,8 @@
         </tbody>
     </table>
     <p>
-        <a href="{{Route('template.index')}}" class="btn btn-custom-back">Atras</a>
-        <input type="submit" value="Asignar Pasos" class="btn btn-custom-create">
+        <a href="{{Route('template.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Regresa a la pagina anterior de lista de plantillas" data-original-title="Atras" >Atras</a>
+        <input type="submit" value="Asignar Pasos" class="btn btn-custom-create" data-toggle="popover" data-content="Permite asignar los pasos a la Plantilla" data-original-title="Asignar">
     </p>
     {{Form::close()}}
 

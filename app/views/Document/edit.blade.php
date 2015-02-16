@@ -19,7 +19,7 @@
 @endsection
 @section('body')
 
-    <h1 class="page-header">Crear Nueva Plantilla</h1>
+    <h1 class="page-header">Editar el Documento</h1>
 
 
     {{ Form::model($document,['route' => ['document.update',$document->id], 'method' => 'PUT', 'role' => 'form']) }}
@@ -42,7 +42,8 @@
 
 
     <p>
-        <input type="submit" value="Editar" class="btn btn-custom-edit">
+        <a href="{{Route('document.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Permite volver a la lista de documentos creados" data-original-title="Atras">Atras</a>
+        <input type="submit" value="Editar" class="btn btn-custom-edit" data-toggle="popover" data-content="Permite editar el Documento" data-original-title="Editar">
     </p>
 
     {{Form::close()}}

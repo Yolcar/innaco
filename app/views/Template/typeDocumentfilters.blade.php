@@ -1,23 +1,29 @@
 
 <h3>Seleccione el Tipo de Documento</h3>
-<div class="span4"><button id="typedocuments" type="button" class="btn btn-custom-show" data-toggle="collapse" data-target="#myDiv" data-open-text="Ocultar">Mostrar</button></div>
+<div class="span4"><button id="my-btn" type="button" data-trigger="hover" class="btn btn-custom-show " data-original-title="Mostrar" data-content="Mostrar la lista del Tipo de documento que que va a seleccionar" data-toggle="popover">Mostrar</button></div>
+
+
+
 <script>
-    $("[type=button]").button();
-    $("[type=button]").click(function(){
-        $(this).button('toggle');
-        if ($(this).text()==="Mostrar"){
-            $(this).button('open');
-        }
-        else {
-            $(this).button('reset');
+
+    $('#my-btn').click(function () {
+        if ($(this).text() == 'Mostrar'){
+            $('#myDiv').collapse('show');
+            $('#my-btn').html('Ocultar');
+        }else{
+            $('#myDiv').collapse('hide');
+            $('#my-btn').html('Mostrar');
         }
     });
+
+
 </script>
+
 <div class="span4 collapse" id="myDiv">
 {{ Form::open(['route' => 'template.create', 'method' => 'GET']) }}
 
 {{ Form::text('search') }}
-{{ Form::button('Buscar',['type' => 'submit', 'class' => 'btn btn-custom-search']) }}
+{{ Form::button('Buscar',['type' => 'submit', 'class' => 'btn btn-custom-search','data-toggle'=>'popover','data-content'=>'Hace una búsqueda de los tipos de documentos creados.','data-original-title'=>'Buscar']) }}
 
 {{Form::close()}}
 <table class="table .table-hover">
@@ -29,7 +35,7 @@
         <tr>
             <td class="name">{{$typeDocument->name}}</td>
             <td>
-                <button onclick="asignarID('{{$typeDocument->id}}','{{$typeDocument->name}}')" type="button" class="btn btn-custom-step">Usar Tipo</button>
+                <button onclick="asignarID('{{$typeDocument->id}}','{{$typeDocument->name}}')" type="button" class="btn btn-custom-step" data-toggle="popover" data-content="Selecciona el tipo de documento que va a pertenecer la plantilla." data-original-title="Usar Tipo">Usar Tipo</button>
             </td>
         </tr>
     @endforeach

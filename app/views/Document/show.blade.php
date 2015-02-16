@@ -19,7 +19,7 @@
         <br>
     </div>
     <p>
-        <input type="submit" value="Volver" class="btn btn-custom-back">
+        <input type="submit" value="Atras" class="btn btn-custom-back" data-toggle="popover" data-content="Regresa a la pagina de lista de documentos creados" data-original-title="Atras">
     </p>
     </div>
 

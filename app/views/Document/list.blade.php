@@ -5,7 +5,7 @@
 @section('body')
     <h1 class="page-header">Documento</h1>
 <p>
-    <a class="btn btn-custom-create" href="{{ Route('document.create') }}">Crear Documento</a>
+    <a class="btn btn-custom-create" href="{{ Route('document.create') }}" data-toggle="popover" data-content="Permite crear nuevos documentos." data-original-title="Crear Documento">Crear Documento</a>
 </p>
 
     <h3>Se encontraron {{$documents->getTotal()}} Documentos.</h3>
@@ -37,22 +37,14 @@
                     @if($document->workflow->first()->users_id == \Sentry::getUser()->getId())
                         @if($document->workflow->count() > 1)
                             @if($document->workflow->find($document->workflow->first()->id+1)->users_id == 0)
-                                <a class="btn btn-custom-edit" href="{{Route('document.edit', $document->id)}}">
-                                    Editar
-                                </a>
+                                <a class="btn btn-custom-edit" href="{{Route('document.edit', $document->id)}}" data-toggle="popover" data-content="Permite editar los documentos creados de la lista" data-original-title="Editar">Editar</a>
                             @endif
                         @else
-                            <a class="btn btn-custom-edit" href="{{Route('document.edit', $document->id)}}">
-                                Editar
-                            </a>
+                            <a class="btn btn-custom-edit" href="{{Route('document.edit', $document->id)}}" data-toggle="popover" data-content="Permite editar los documentos creados de la lista" data-original-title="Editar">Editar</a>
                         @endif
                     @endif
-                    <a class="btn btn-custom-show" href="{{Route('document.show', $document->id)}}">
-                        Mostrar
-                    </a>
-                    <a href="{{Route('workflow.show',$document->id)}}" class="btn btn-custom-tracking">
-                        Ver Tracking
-                    </a>
+                    <a class="btn btn-custom-show" href="{{Route('document.show', $document->id)}}" data-toggle="popover" data-content="Da una vista previa del documento seleccionado." data-original-title="Mostrar">Mostrar</a>
+                    <a href="{{Route('workflow.show',$document->id)}}" class="btn btn-custom-tracking" data-toggle="popover" data-content="Abre una ventana que mostrara la información del Documento y actividades a realizarle." data-original-title="Ver Tracking">Ver Tracking</a>
                 </td>
 
             </tr>

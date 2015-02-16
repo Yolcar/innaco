@@ -19,7 +19,7 @@
 @endsection
 @section('body')
 
-    <h1 class="page-header">Crear Nueva Plantilla</h1>
+    <h1 class="page-header">Crear Nuevo Documento</h1>
 
 
     {{ Form::open(['route' => 'document.store', 'method' => 'POST', 'role' => 'form']) }}
@@ -42,8 +42,10 @@
 
 
     <p>
-        <input type="submit" value="Crear" class="btn btn-custom-create">
+        <a href="{{Route('document.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Permite volver a la lista de los documentos creados" data-original-title="Atras">Atras</a>
+        <input type="submit" value="Crear" class="btn btn-custom-create" data-toggle="popover" data-content="Permite crear documentos" data-original-title="Crear">
     </p>
+
 
     {{Form::close()}}
 
