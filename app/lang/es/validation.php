@@ -102,10 +102,24 @@ return array(
     */
 
     'attributes' => array(
-        'name'  => 'nombre',
-        'execute_date' => 'fecha de ejecucion',
-        'typedocuments_id' => 'tipo de tocumento',
-        'body' => 'de texto'
+        'name'                  => 'nombre',
+        'execute_date'          => 'fecha de ejecucion',
+        'typedocuments_id'      => 'tipo de tocumento',
+        'body'                  => 'de texto',
+        'full_name'            => 'Nombre y Apellido',
+        'email'                 => 'correo electronico',
+        'password'              => 'Contraseña',
+        'password_confirmation' => 'Confirmar Contraseña',
+        'bySerial'              => 'Serial',
+        'byNameDocument'        => 'Nombre Documento',
+        'byNameTemplate'        => 'Nombre Plantilla',
+        'byNameTypeDocument'    => 'Nombre Tipo de Documento',
+        'byCreateDateBegin'     => 'Fecha de Creacion Desde',
+        'byCreateDateEnd'       => 'Fecha de Creacion Hasta',
+        'byExecuteDateBegin'    => 'Fecha de Ejecucion Desde',
+        'byExecuteDateEnd'      => 'Fecha de Ejecucion Hasta',
+        'byState'               => 'Estado',
+        'byCreatedUser'         => 'Usuario Creador',
     ),
 
 );

@@ -26,7 +26,7 @@
 {{ Form::button('Buscar',['type' => 'submit', 'class' => 'btn btn-custom-search','data-toggle'=>'popover','data-content'=>'Hace una búsqueda de los tipos de documentos creados.','data-original-title'=>'Buscar']) }}
 
 {{Form::close()}}
-<table class="table .table-hover">
+<table class="table table-striped table-hover">
     <div id="dam_return">
     <thead>
     </thead>

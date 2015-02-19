@@ -25,7 +25,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'homestead',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'secret',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

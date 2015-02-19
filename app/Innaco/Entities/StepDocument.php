@@ -29,7 +29,7 @@ class stepDocument extends \Eloquent {
 	}
 
 	public function group(){
-		return $this->belongsTo('Jacopo\Authentication\Models\Group','groups_id','id');
+		return $this->belongsTo('Innaco\Entities\Group','groups_id','id');
 	}
 
 	public function workflow(){

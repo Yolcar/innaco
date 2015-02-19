@@ -10,7 +10,7 @@ class Workflow extends \Eloquent {
 	}
 
 	public function user(){
-		return $this->belongsTo('Jacopo\Authentication\Models\User','users_id','id');
+		return $this->belongsTo('Innaco\Entities\User','users_id','id');
 	}
 
 	public function state(){

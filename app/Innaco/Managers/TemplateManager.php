@@ -5,10 +5,10 @@ class TemplateManager extends BaseManager{
     public function getRules()
     {
         $rules = [
-            'name' => 'required|unique:templates',
+            'name' => 'required|unique:templates,name,' . $this->entity->id,
             'body' => 'required',
             'typedocuments_id' => 'required',
-            'available' => 'required'
+            'available' => ''
         ];
 
         return $rules;

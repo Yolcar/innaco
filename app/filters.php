@@ -48,6 +48,24 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('Authenticate', function()
+{
+    if(Auth::check()==true){
+        if(Session::getId() != Auth::user()->last_session){
+            Auth::logout();
+            return Redirect::to('login');
+        }
+    }else{
+        return Redirect::to('login');
+    };
+});
+
+Route::filter('isManagement', function()
+{
+    if(Auth::getUser()->hasGroup('Management') == false){
+        return Response::view('errors.missing', array(), 404);
+    }
+});
 
 Route::filter('auth.basic', function()
 {

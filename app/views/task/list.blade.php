@@ -40,7 +40,7 @@
 
     @include('task.filters')
 
-    <table class="table .table-hover">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -110,7 +110,7 @@
                                             </div> <!-- end yes -->
 
                                             <div id="no" style="float:left;">
-                                                <button type="button" class="btn btn-defualt" data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                                             </div><!-- end no -->
 
                                         </div> <!-- end delmodelcontainer -->

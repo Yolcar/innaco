@@ -9,7 +9,7 @@ class StepDocumentManager extends BaseManager{
             'tasks_id' => 'required',
             'groups_id' => 'required',
             'order' => 'required',
-            'available' => 'required',
+            'available' => '',
         ];
 
         return $rules;

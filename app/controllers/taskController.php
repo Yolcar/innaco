@@ -63,32 +63,32 @@ class taskController extends \BaseController {
 
 
 
-	public function activation()
-	{
-		if(Input::has('search'))
-		{
-			$tasks= $this->taskRepo->getModel()->search(Input::get('search'))->where('available','=',0);
-		}
-		else{
-			$tasks= $this->taskRepo->getModel()->where('available','=',0)->paginate(20);
-		}
-		return View::make('task.activation',compact('tasks'));
-	}
+    public function activation()
+    {
+        if(Input::has('search'))
+        {
+            $tasks= $this->taskRepo->getModel()->search(Input::get('search'))->where('available','=',0);
+        }
+        else{
+            $tasks= $this->taskRepo->getModel()->where('available','=',0)->paginate(20);
+        }
+        return View::make('task.activation',compact('tasks'));
+    }
 
-	public function active($id){
-		$task = $this->taskRepo->find($id);
-		$stepDocuments = $this->stepDocumentRepo->getModel()->where('tasks_id','=',$id)->where('available','=',0)->get();
+    public function active($id){
+        $task = $this->taskRepo->find($id);
+        $stepDocuments = $this->stepDocumentRepo->getModel()->where('tasks_id','=',$id)->where('available','=',0)->get();
 
-		foreach ($stepDocuments as $stepDocument){
-			$this->stepDocumentRepo->getModel()->where('id','=',$stepDocument->id)->update(['available' => 1]);
-		}
-		$task->update(['available' => 1]);
-		return Redirect::route('taskActivation');
+        foreach ($stepDocuments as $stepDocument){
+            $this->stepDocumentRepo->getModel()->where('id','=',$stepDocument->id)->update(['available' => 1]);
+        }
+        $task->update(['available' => 1]);
+        return Redirect::route('taskActivation');
 
-	}
+    }
 
 
-	/**
+    /**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id

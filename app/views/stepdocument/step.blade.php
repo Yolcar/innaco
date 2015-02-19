@@ -36,7 +36,7 @@
         </table>
     </div>
 
-    <table class="table .table-hover text-center">
+    <table class="table table-striped table-hover text-center">
         <thead>
         <tr>
             <th width="20%" class="text-center">Paso</th>

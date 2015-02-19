@@ -9,7 +9,7 @@
 
     @include('document.filtersTemplate')
 
-    <table class="table .table-hover">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th width="20%">Tipo Documento</th>

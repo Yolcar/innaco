@@ -12,7 +12,7 @@
 
     @include('document.filters')
 
-    <table class="table .table-hover">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Serial</th>
@@ -34,7 +34,7 @@
 
                 <td>
                     {{ Form::open(['route' => ['document.destroy', $document->id ], 'method' => 'DELETE']) }}
-                    @if($document->workflow->first()->users_id == \Sentry::getUser()->getId())
+                    @if($document->workflow->first()->users_id == Auth::getUser()->id)
                         @if($document->workflow->count() > 1)
                             @if($document->workflow->find($document->workflow->first()->id+1)->users_id == 0)
                                 <a class="btn btn-custom-edit" href="{{Route('document.edit', $document->id)}}" data-toggle="popover" data-content="Permite editar los documentos creados de la lista" data-original-title="Editar">Editar</a>

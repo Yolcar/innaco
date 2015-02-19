@@ -6,16 +6,19 @@
 	"type": "project",
   	"require-dev": {
 		"way/generators": "~2.0",
-	  	"codeception/codeception": "2.0.*",
-	  	"fzaninotto/faker": "v1.3.0"
+	  	"codeception/codeception": "2.0.*"
   	},
 	"require": {
 		"laravel/framework": "4.2.*",
 		"barryvdh/laravel-ide-helper": "~1.11",
 	  	"caouecs/laravel4-lang": "dev-master",
 	  	"nicolaslopezj/searchable": "1.*",
-	  	"jacopo/laravel-authentication-acl": "1.2.*",
-		"barryvdh/laravel-debugbar": "~1.8"
+		"barryvdh/laravel-debugbar": "~1.8",
+        "barryvdh/laravel-snappy": "0.1.x",
+        "h4cc/wkhtmltopdf-i386": "0.12.x",
+        "h4cc/wkhtmltoimage-i386": "0.12.x",
+        "maatwebsite/excel": "1.*",
+		"intervention/image": "~2.1"
 	},
 	"autoload": {
 	  "psr-4": {

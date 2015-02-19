@@ -124,10 +124,10 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Innaco\Components\FieldServiceProvider',
-		'Jacopo\Authentication\AuthenticationServiceProvider',
-		'Barryvdh\Debugbar\ServiceProvider',
-
-
+        'Barryvdh\Debugbar\ServiceProvider',
+        'Barryvdh\Snappy\ServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
+        'Intervention\Image\ImageServiceProvider',
 	),
 
 	/*
@@ -196,8 +196,11 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 
 		'Field' 			=> 'Innaco\Components\Field',
-		'PDF' => 'Barryvdh\Snappy\Facades\SnappyPdf',
-		'Image' => 'Barryvdh\Snappy\Facades\SnappyImage',
+		'PDF'               => 'Barryvdh\Snappy\Facades\SnappyPdf',
+		'Image'             => 'Barryvdh\Snappy\Facades\SnappyImage',
+        'Excel'             => 'Maatwebsite\Excel\Facades\Excel',
+        'Image'             =>  'Intervention\Image\Facades\Image'
+
 
 	),
 

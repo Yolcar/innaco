@@ -30,8 +30,7 @@ class documentController extends \BaseController {
 	public function index()
 	{
 
-        $user = \Sentry::getUser();
-        $user->getGroups();
+        $user = \Auth::User();
         $templates_id = $this->stepDocumentRepo->getModel()->select('templates_id')->distinct();
 
 		if(Input::has('search'))
@@ -42,7 +41,7 @@ class documentController extends \BaseController {
 			$documents = $this->documentRepo->getModel();
 		}
 		if($templates_id->count()!=0){
-			foreach($user->groups as $group)
+			foreach($user->groups()->get() as $group)
 			{
 				$templates_id->orWhere('groups_id','=',$group->id);
 			}
@@ -73,8 +72,7 @@ class documentController extends \BaseController {
 	 */
 	public function create()
 	{
-		$user = \Sentry::getUser();
-		$user->getGroups();
+		$user = \Auth::User();
 		$templates_id = $this->stepDocumentRepo->getModel()->select('templates_id')->distinct();
 
 		if(Input::has('search'))
@@ -84,42 +82,43 @@ class documentController extends \BaseController {
 		else{
 			$templates = $this->templateRepo->getModel();
 		}
-		if($templates_id->count()!=0){
-			foreach($user->groups as $group)
-			{
-				$templates_id->orWhere(function ($query) use ($group){
-					$query->where('groups_id','=',$group->id)->where('tasks_id','=',1);
-				});
-			}
-			if($templates_id->count()!=0){
-				$templates_id = $templates_id->get();
-				foreach ($templates_id as $template_id) {
-					$templates = $templates->orWhere('id','=',$template_id->templates_id)->where('available','=',1);
-				}
-				$templates = $templates->paginate(20);
-				return View::make('document.selectTemplate',compact('templates'));
-			}
-			else{
-				$templates = $templates->where('id','=',0)->paginate(20);
-				return View::make('document.selectTemplate',compact('templates'));
-			}
-		}
-		else{
-			$templates = $templates->where('id','=',0)->paginate(20);
-			return View::make('document.selectTemplate',compact('templates'));
-		}
+        if($user->groups->count() != 0) {
+            if ($templates_id->count() != 0) {
+                foreach ($user->groups()->get() as $group) {
+                    $templates_id->orWhere(function ($query) use ($group) {
+                        $query->where('groups_id', '=', $group->id)->where('tasks_id', '=', 1);
+                    });
+                }
+                if ($templates_id->count() != 0) {
+                    $templates_id = $templates_id->get();
+                    foreach ($templates_id as $template_id) {
+                        $templates = $templates->orWhere('id', '=', $template_id->templates_id)->where('available', '=', 1);
+                    }
+                    $templates = $templates->paginate(20);
+                    return View::make('document.selectTemplate', compact('templates'));
+                } else {
+                    $templates = $templates->where('id', '=', 0)->paginate(20);
+                    return View::make('document.selectTemplate', compact('templates'));
+                }
+            } else {
+                $templates = $templates->where('id', '=', 0)->paginate(20);
+                return View::make('document.selectTemplate', compact('templates'));
+            }
+        } else {
+            $templates = $templates->where('id', '=', 0)->paginate(20);
+            return View::make('document.selectTemplate', compact('templates'));
+        }
 	}
 
 	public function writeDocument($id)
 	{
-		$user = \Sentry::getUser();
-		$user->getGroups();
+		$user = \Auth::User();
 		$templates_id = $this->stepDocumentRepo->getModel()->select('templates_id')->distinct();
 
 		$template = $this->templateRepo->getModel();
 		if($template->count()!=0) {//si encuenta la plantilla
 			if ($templates_id->count() != 0) {
-				foreach ($user->groups as $group) {
+				foreach ($user->groups()->get() as $group) {
 					$templates_id->orWhere(function ($query) use ($group) {
 						$query->Where('groups_id', '=', $group->id)->where('tasks_id', '=', 1);
 					});
@@ -188,14 +187,13 @@ class documentController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$user = \Sentry::getUser();
-		$user->getGroups();
+		$user = \Auth::User();
 		$templates_id = $this->stepDocumentRepo->getModel()->select('templates_id')->distinct();
 		$document = $this->documentRepo->find($id);
 
 
 		if($templates_id->count()!=0){
-			foreach($user->groups as $group)
+			foreach($user->groups()->get() as $group)
 			{
 				$templates_id->orWhere('groups_id','=',$group->id);
 			}
@@ -225,8 +223,8 @@ class documentController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = \Sentry::getUser();
-		$workflows = $this->workflowRepo->getModel()->where('documents_id','=',$id)->where('users_id','=',intval($user->getId()))->get()->first();
+		$user = \Auth::User();
+		$workflows = $this->workflowRepo->getModel()->where('documents_id','=',$id)->where('users_id','=',intval($user->id))->get()->first();
 		$workflowsNext = $this->workflowRepo->getModel()->where('id','=',$workflows->id+1)->where('documents_id','=',$id)->get()->first();
 
 		if ($workflows){
@@ -269,5 +267,19 @@ class documentController extends \BaseController {
 		$manager->save();
 		return Redirect::route('document.index');
 	}
+
+    public function printDocument($id){
+        $workflows = $this->workflowRepo->getModel()->where('documents_id','=',$id);
+        if($workflows->count() == $workflows->where('states_id','=',3)->count()) {
+            if($workflows->where('users_id','=',Auth::getUser()->id)){
+                $document = $this->documentRepo->find($id);
+                $pdf = PDF::loadView('document.print', compact('document'));
+                return $pdf->stream($document->name.date("Y-m-d H:i:s").'.pdf');
+                //return View::make('document.print', compact('document'));
+            }
+        }else{
+            return Response::view('errors.missing', array(), 404);
+        }
+    }
 
 }

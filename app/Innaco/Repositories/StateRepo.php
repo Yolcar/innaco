@@ -8,7 +8,7 @@ class StateRepo extends BaseRepo {
         return new State();
     }
 
-    public function newTypeDocument()
+    public function newState()
     {
         $state = new State();
         return $state;

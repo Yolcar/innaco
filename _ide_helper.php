@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 4, to provide autocomplete information to your IDE
- * Generated for Laravel 4.2.17 on 2015-02-15.
+ * Generated for Laravel 4.2.17 on 2015-02-19.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12396,6 +12396,153 @@ namespace {
     }
 
 
+    class PDF extends \Barryvdh\Snappy\Facades\SnappyPdf{
+        
+        /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Pdf 
+         * @static 
+         */
+        public static function snappy(){
+            return \Barryvdh\Snappy\PdfWrapper::snappy();
+        }
+        
+        /**
+         * Set the paper size (default A4)
+         *
+         * @param string $paper
+         * @param string $orientation
+         * @return $this 
+         * @static 
+         */
+        public static function setPaper($paper, $orientation = null){
+            return \Barryvdh\Snappy\PdfWrapper::setPaper($paper, $orientation);
+        }
+        
+        /**
+         * Set the orientation (default portrait)
+         *
+         * @param string $orientation
+         * @return static 
+         * @static 
+         */
+        public static function setOrientation($orientation){
+            return \Barryvdh\Snappy\PdfWrapper::setOrientation($orientation);
+        }
+        
+        /**
+         * Show or hide warnings
+         *
+         * @param bool $warnings
+         * @return $this 
+         * @deprecated 
+         * @static 
+         */
+        public static function setWarnings($warnings){
+            return \Barryvdh\Snappy\PdfWrapper::setWarnings($warnings);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setOption($name, $value){
+            return \Barryvdh\Snappy\PdfWrapper::setOption($name, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setOptions($options){
+            return \Barryvdh\Snappy\PdfWrapper::setOptions($options);
+        }
+        
+        /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @return static 
+         * @static 
+         */
+        public static function loadHTML($string){
+            return \Barryvdh\Snappy\PdfWrapper::loadHTML($string);
+        }
+        
+        /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return static 
+         * @static 
+         */
+        public static function loadFile($file){
+            return \Barryvdh\Snappy\PdfWrapper::loadFile($file);
+        }
+        
+        /**
+         * Load a View and convert to HTML
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return static 
+         * @static 
+         */
+        public static function loadView($view, $data = array(), $mergeData = array()){
+            return \Barryvdh\Snappy\PdfWrapper::loadView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function output(){
+            return \Barryvdh\Snappy\PdfWrapper::output();
+        }
+        
+        /**
+         * Save the PDF to a file
+         *
+         * @param $filename
+         * @return static 
+         * @static 
+         */
+        public static function save($filename){
+            return \Barryvdh\Snappy\PdfWrapper::save($filename);
+        }
+        
+        /**
+         * Make the PDF downloadable by the user
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */
+        public static function download($filename = 'document.pdf'){
+            return \Barryvdh\Snappy\PdfWrapper::download($filename);
+        }
+        
+        /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */
+        public static function stream($filename = 'document.pdf'){
+            return \Barryvdh\Snappy\PdfWrapper::stream($filename);
+        }
+        
+    }
+
+
     class Image extends \Intervention\Image\Facades\Image{
         
         /**
@@ -12449,437 +12596,126 @@ namespace {
     }
 
 
-    class Sentry extends \Cartalyst\Sentry\Facades\Laravel\Sentry{
+    class Excel extends \Maatwebsite\Excel\Facades\Excel{
         
         /**
-         * Registers a user by giving the required credentials
-         * and an optional flag for whether to activate the user.
+         * Create a new file
          *
-         * @param array $credentials
-         * @param bool $activate
-         * @return \Cartalyst\Sentry\Users\UserInterface 
+         * @param $filename
+         * @param callable|null $callback
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
          * @static 
          */
-        public static function register($credentials, $activate = false){
-            return \Cartalyst\Sentry\Sentry::register($credentials, $activate);
+        public static function create($filename, $callback = null){
+            return \Maatwebsite\Excel\Excel::create($filename, $callback);
         }
         
         /**
-         * Attempts to authenticate the given user
-         * according to the passed credentials.
+         * Load an existing file
          *
-         * @param array $credentials
-         * @param bool $remember
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @throws \Cartalyst\Sentry\Throttling\UserBannedException
-         * @throws \Cartalyst\Sentry\Throttling\UserSuspendedException
-         * @throws \Cartalyst\Sentry\Users\LoginRequiredException
-         * @throws \Cartalyst\Sentry\Users\PasswordRequiredException
-         * @throws \Cartalyst\Sentry\Users\UserNotFoundException
+         * @param string $file The file we want to load
+         * @param callback|null $callback
+         * @param string|null $encoding
+         * @param bool $noBasePath
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
          * @static 
          */
-        public static function authenticate($credentials, $remember = false){
-            return \Cartalyst\Sentry\Sentry::authenticate($credentials, $remember);
+        public static function load($file, $callback = null, $encoding = null, $noBasePath = false){
+            return \Maatwebsite\Excel\Excel::load($file, $callback, $encoding, $noBasePath);
         }
         
         /**
-         * Alias for authenticating with the remember flag checked.
+         * Set select sheets
          *
-         * @param array $credentials
-         * @return \Cartalyst\Sentry\Users\UserInterface 
+         * @param $sheets
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
          * @static 
          */
-        public static function authenticateAndRemember($credentials){
-            return \Cartalyst\Sentry\Sentry::authenticateAndRemember($credentials);
+        public static function selectSheets($sheets = array()){
+            return \Maatwebsite\Excel\Excel::selectSheets($sheets);
         }
         
         /**
-         * Check to see if the user is logged in and activated, and hasn't been banned or suspended.
+         * Select sheets by index
          *
-         * @return bool 
+         * @param array $sheets
+         * @return $this 
          * @static 
          */
-        public static function check(){
-            return \Cartalyst\Sentry\Sentry::check();
+        public static function selectSheetsByIndex($sheets = array()){
+            return \Maatwebsite\Excel\Excel::selectSheetsByIndex($sheets);
         }
         
         /**
-         * Logs in the given user and sets properties
-         * in the session.
+         * Batch import
          *
-         * @param \Cartalyst\Sentry\Users\UserInterface $user
-         * @param bool $remember
-         * @return void 
-         * @throws \Cartalyst\Sentry\Users\UserNotActivatedException
+         * @param $files
+         * @param callback $callback
+         * @return \Maatwebsite\Excel\PHPExcel 
          * @static 
          */
-        public static function login($user, $remember = false){
-            \Cartalyst\Sentry\Sentry::login($user, $remember);
+        public static function batch($files, $callback){
+            return \Maatwebsite\Excel\Excel::batch($files, $callback);
         }
         
         /**
-         * Alias for logging in and remembering.
+         * Create a new file and share a view
          *
-         * @param \Cartalyst\Sentry\Users\UserInterface $user
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
          * @static 
          */
-        public static function loginAndRemember($user){
-            return \Cartalyst\Sentry\Sentry::loginAndRemember($user);
+        public static function shareView($view, $data = array(), $mergeData = array()){
+            return \Maatwebsite\Excel\Excel::shareView($view, $data, $mergeData);
         }
         
         /**
-         * Logs the current user out.
+         * Create a new file and load a view
          *
-         * @return void 
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
          * @static 
          */
-        public static function logout(){
-            \Cartalyst\Sentry\Sentry::logout();
+        public static function loadView($view, $data = array(), $mergeData = array()){
+            return \Maatwebsite\Excel\Excel::loadView($view, $data, $mergeData);
         }
         
         /**
-         * Sets the user to be used by Sentry.
+         * Set filters
          *
-         * @param \Cartalyst\Sentry\Users\UserInterface
-         * @return void 
+         * @param array $filters
+         * @return \Maatwebsite\Excel\Excel 
          * @static 
          */
-        public static function setUser($user){
-            \Cartalyst\Sentry\Sentry::setUser($user);
+        public static function registerFilters($filters = array()){
+            return \Maatwebsite\Excel\Excel::registerFilters($filters);
         }
         
         /**
-         * Returns the current user being used by Sentry, if any.
+         * Enable certain filters
          *
-         * @return \Cartalyst\Sentry\Users\UserInterface 
+         * @param string|array $filter
+         * @param bool|false|string $class
+         * @return \Maatwebsite\Excel\Excel 
          * @static 
          */
-        public static function getUser(){
-            return \Cartalyst\Sentry\Sentry::getUser();
+        public static function filter($filter, $class = false){
+            return \Maatwebsite\Excel\Excel::filter($filter, $class);
         }
         
         /**
-         * Sets the session driver for Sentry.
+         * Get register, enabled (or both) filters
          *
-         * @param \Cartalyst\Sentry\Sessions\SessionInterface $session
-         * @return void 
-         * @static 
-         */
-        public static function setSession($session){
-            \Cartalyst\Sentry\Sentry::setSession($session);
-        }
-        
-        /**
-         * Gets the session driver for Sentry.
-         *
-         * @return \Cartalyst\Sentry\Sessions\SessionInterface 
-         * @static 
-         */
-        public static function getSession(){
-            return \Cartalyst\Sentry\Sentry::getSession();
-        }
-        
-        /**
-         * Sets the cookie driver for Sentry.
-         *
-         * @param \Cartalyst\Sentry\Cookies\CookieInterface $cookie
-         * @return void 
-         * @static 
-         */
-        public static function setCookie($cookie){
-            \Cartalyst\Sentry\Sentry::setCookie($cookie);
-        }
-        
-        /**
-         * Gets the cookie driver for Sentry.
-         *
-         * @return \Cartalyst\Sentry\Cookies\CookieInterface 
-         * @static 
-         */
-        public static function getCookie(){
-            return \Cartalyst\Sentry\Sentry::getCookie();
-        }
-        
-        /**
-         * Sets the group provider for Sentry.
-         *
-         * @param \Cartalyst\Sentry\Groups\ProviderInterface
-         * @return void 
-         * @static 
-         */
-        public static function setGroupProvider($groupProvider){
-            \Cartalyst\Sentry\Sentry::setGroupProvider($groupProvider);
-        }
-        
-        /**
-         * Gets the group provider for Sentry.
-         *
-         * @return \Cartalyst\Sentry\Groups\ProviderInterface 
-         * @static 
-         */
-        public static function getGroupProvider(){
-            return \Cartalyst\Sentry\Sentry::getGroupProvider();
-        }
-        
-        /**
-         * Sets the user provider for Sentry.
-         *
-         * @param \Cartalyst\Sentry\Users\ProviderInterface
-         * @return void 
-         * @static 
-         */
-        public static function setUserProvider($userProvider){
-            \Cartalyst\Sentry\Sentry::setUserProvider($userProvider);
-        }
-        
-        /**
-         * Gets the user provider for Sentry.
-         *
-         * @return \Cartalyst\Sentry\Users\ProviderInterface 
-         * @static 
-         */
-        public static function getUserProvider(){
-            return \Cartalyst\Sentry\Sentry::getUserProvider();
-        }
-        
-        /**
-         * Sets the throttle provider for Sentry.
-         *
-         * @param \Cartalyst\Sentry\Throttling\ProviderInterface
-         * @return void 
-         * @static 
-         */
-        public static function setThrottleProvider($throttleProvider){
-            \Cartalyst\Sentry\Sentry::setThrottleProvider($throttleProvider);
-        }
-        
-        /**
-         * Gets the throttle provider for Sentry.
-         *
-         * @return \Cartalyst\Sentry\Throttling\ProviderInterface 
-         * @static 
-         */
-        public static function getThrottleProvider(){
-            return \Cartalyst\Sentry\Sentry::getThrottleProvider();
-        }
-        
-        /**
-         * Sets the IP address Sentry is bound to.
-         *
-         * @param string $ipAddress
-         * @return void 
-         * @static 
-         */
-        public static function setIpAddress($ipAddress){
-            \Cartalyst\Sentry\Sentry::setIpAddress($ipAddress);
-        }
-        
-        /**
-         * Gets the IP address Sentry is bound to.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getIpAddress(){
-            return \Cartalyst\Sentry\Sentry::getIpAddress();
-        }
-        
-        /**
-         * Find the group by ID.
-         *
-         * @param int $id
-         * @return \Cartalyst\Sentry\Groups\GroupInterface $group
-         * @throws \Cartalyst\Sentry\Groups\GroupNotFoundException
-         * @static 
-         */
-        public static function findGroupById($id){
-            return \Cartalyst\Sentry\Sentry::findGroupById($id);
-        }
-        
-        /**
-         * Find the group by name.
-         *
-         * @param string $name
-         * @return \Cartalyst\Sentry\Groups\GroupInterface $group
-         * @throws \Cartalyst\Sentry\Groups\GroupNotFoundException
-         * @static 
-         */
-        public static function findGroupByName($name){
-            return \Cartalyst\Sentry\Sentry::findGroupByName($name);
-        }
-        
-        /**
-         * Returns all groups.
-         *
-         * @return array $groups
-         * @static 
-         */
-        public static function findAllGroups(){
-            return \Cartalyst\Sentry\Sentry::findAllGroups();
-        }
-        
-        /**
-         * Creates a group.
-         *
-         * @param array $attributes
-         * @return \Cartalyst\Sentry\Groups\GroupInterface 
-         * @static 
-         */
-        public static function createGroup($attributes){
-            return \Cartalyst\Sentry\Sentry::createGroup($attributes);
-        }
-        
-        /**
-         * Finds a user by the given user ID.
-         *
-         * @param mixed $id
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @throws \Cartalyst\Sentry\Users\UserNotFoundException
-         * @static 
-         */
-        public static function findUserById($id){
-            return \Cartalyst\Sentry\Sentry::findUserById($id);
-        }
-        
-        /**
-         * Finds a user by the login value.
-         *
-         * @param string $login
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @throws \Cartalyst\Sentry\Users\UserNotFoundException
-         * @static 
-         */
-        public static function findUserByLogin($login){
-            return \Cartalyst\Sentry\Sentry::findUserByLogin($login);
-        }
-        
-        /**
-         * Finds a user by the given credentials.
-         *
-         * @param array $credentials
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @throws \Cartalyst\Sentry\Users\UserNotFoundException
-         * @static 
-         */
-        public static function findUserByCredentials($credentials){
-            return \Cartalyst\Sentry\Sentry::findUserByCredentials($credentials);
-        }
-        
-        /**
-         * Finds a user by the given activation code.
-         *
-         * @param string $code
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @throws \RuntimeException
-         * @throws \Cartalyst\Sentry\Users\UserNotFoundException
-         * @static 
-         */
-        public static function findUserByActivationCode($code){
-            return \Cartalyst\Sentry\Sentry::findUserByActivationCode($code);
-        }
-        
-        /**
-         * Finds a user by the given reset password code.
-         *
-         * @param string $code
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @throws \RuntimeException
-         * @throws \Cartalyst\Sentry\Users\UserNotFoundException
-         * @static 
-         */
-        public static function findUserByResetPasswordCode($code){
-            return \Cartalyst\Sentry\Sentry::findUserByResetPasswordCode($code);
-        }
-        
-        /**
-         * Returns an all users.
-         *
+         * @param string|boolean $key [description]
          * @return array 
          * @static 
          */
-        public static function findAllUsers(){
-            return \Cartalyst\Sentry\Sentry::findAllUsers();
-        }
-        
-        /**
-         * Returns all users who belong to
-         * a group.
-         *
-         * @param \Cartalyst\Sentry\Groups\GroupInterface $group
-         * @return array 
-         * @static 
-         */
-        public static function findAllUsersInGroup($group){
-            return \Cartalyst\Sentry\Sentry::findAllUsersInGroup($group);
-        }
-        
-        /**
-         * Returns all users with access to
-         * a permission(s).
-         *
-         * @param string|array $permissions
-         * @return array 
-         * @static 
-         */
-        public static function findAllUsersWithAccess($permissions){
-            return \Cartalyst\Sentry\Sentry::findAllUsersWithAccess($permissions);
-        }
-        
-        /**
-         * Returns all users with access to
-         * any given permission(s).
-         *
-         * @param array $permissions
-         * @return array 
-         * @static 
-         */
-        public static function findAllUsersWithAnyAccess($permissions){
-            return \Cartalyst\Sentry\Sentry::findAllUsersWithAnyAccess($permissions);
-        }
-        
-        /**
-         * Creates a user.
-         *
-         * @param array $credentials
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @static 
-         */
-        public static function createUser($credentials){
-            return \Cartalyst\Sentry\Sentry::createUser($credentials);
-        }
-        
-        /**
-         * Returns an empty user object.
-         *
-         * @return \Cartalyst\Sentry\Users\UserInterface 
-         * @static 
-         */
-        public static function getEmptyUser(){
-            return \Cartalyst\Sentry\Sentry::getEmptyUser();
-        }
-        
-        /**
-         * Finds a throttler by the given user ID.
-         *
-         * @param mixed $id
-         * @param string $ipAddress
-         * @return \Cartalyst\Sentry\Throttling\ThrottleInterface 
-         * @static 
-         */
-        public static function findThrottlerByUserId($id, $ipAddress = null){
-            return \Cartalyst\Sentry\Sentry::findThrottlerByUserId($id, $ipAddress);
-        }
-        
-        /**
-         * Finds a throttling interface by the given user login.
-         *
-         * @param string $login
-         * @param string $ipAddress
-         * @return \Cartalyst\Sentry\Throttling\ThrottleInterface 
-         * @static 
-         */
-        public static function findThrottlerByUserLogin($login, $ipAddress = null){
-            return \Cartalyst\Sentry\Sentry::findThrottlerByUserLogin($login, $ipAddress);
+        public static function getFilters($key = false){
+            return \Maatwebsite\Excel\Excel::getFilters($key);
         }
         
     }

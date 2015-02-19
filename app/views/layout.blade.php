@@ -10,43 +10,45 @@
 	<title>Dashboard Template for Bootstrap</title>
 
 	{{ HTML::style('bootstrap/css/bootstrap.min.css') }}
-	{{HTML::style('css/datepicker3.css')}}
+	{{ HTML::style('css/datepicker3.css') }}
 	{{ HTML::style('css/dashboard.css') }}
     {{ HTML::style('css/button.css') }}
+    {{ HTML::style('css/sidebar.css') }}
+    {{ HTML::style('css/font-awesome.css') }}
+    {{ HTML::style('css/font-awesome.min.css') }}
 
-
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
+    {{ HTML::script('js/html5shiv.min.js') }}
+    {{ HTML::script('js/respond.min.js') }}
 	{{ HTML::script('js/jquery-2.1.3.min.js') }}
 	{{ HTML::script('bootstrap/js/bootstrap.min.js') }}
 	{{ HTML::script('ckeditor/ckeditor.js') }}
 	{{ HTML::script('js/bootstrap-datepicker.js') }}
 	{{ HTML::script('js/locales/bootstrap-datepicker.es.js') }}
+    {{ HTML::script('js/sidebar.js') }}
 
-	<script>
-		$(function (){
-			$('[data-toggle="popover"]').popover({
-				trigger: 'hover',
-				'placement': 'top'
-			});
-		});
-	</script>
+    <script>
+        $(function (){
+            $('[data-toggle="popover"]').popover({
+                trigger: 'hover',
+                'placement': 'top'
+            });
+        });
+    </script>
 
 	@yield('head')
-
 </head>
 
 <body>
 
 @yield('navbar')
-
+<!-- Begin page content -->
 <div class="container-fluid">
-	<div class="row">
-		@yield('sidebar')
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="row">
+        @yield('sidebar')
+        <div class="main col-md-10 col-md-offset-2">
 			@yield('body')
 		</div>
-	</div></div>>
+	</div>
+</div>
 </body>
 </html>

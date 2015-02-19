@@ -9,7 +9,7 @@
 
     @include('typedocument.activeFilters')
 
-    <table class="table .table-hover">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th width="40%">Nombre</th>

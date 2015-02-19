@@ -1,6 +1,6 @@
 <div class="form-group">
     {{ $control }}
-    @if ($error)
-        <p class="error_message">{{ $error }}</p>
+    @if( isset($error) )
+        <div class="alert alert-danger">{{$error}}</div>
     @endif
 </div>

@@ -29,7 +29,7 @@
                 <td>{{$workflow->stepdocument->group->name}}</td>
                 <td>{{$workflow->state->name}}</td>
                 @if($workflow->state->id == 2)
-                    @if(\Sentry::getUser()->inGroup(Sentry::findGroupByName($workflow->stepdocument->group->name)))
+                    @if(Auth::getUser()->hasGroup($workflow->stepdocument->group->name))
                    <td><a class="btn btn-custom-step" href="{{Route('workflow.action',[$workflow->documents_id,$workflow->id])}}" data-toggle="popover" data-content="Permite visualizar las tares pendientes" data-original-title="Gestionar">Gestionar</a></td>
                     @else
                         <td></td>
@@ -41,6 +41,9 @@
         @endforeach
         </tbody>
     </table>
+    @if($listo==true)
+        <a href="{{Route('document.print',$workflow->documents_id)}}" class="btn btn-custom-create" data-toggle="popover" data-content="Permite imprimir el documento" data-original-title="Imprimir">Imprimir</a>
+    @endif
     <a href="{{Route('document.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Permite volver a la lista de los documentos creados" data-original-title="Atras">Atras</a>
 </div>
 

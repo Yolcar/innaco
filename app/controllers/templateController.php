@@ -40,7 +40,7 @@ class templateController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$templates = $this->templateRepo->getModel()->search(Input::get('search'))->where('available','=',1);
+			$templates = $this->templateRepo->getModel()->where('name','LIKE','%'.Input::get('search').'%')->where('available','=',1)->paginate(20);
 		}
 		else{
 			$templates = $this->templateRepo->getModel()->where('available','=',1)->paginate(20);
@@ -58,10 +58,10 @@ class templateController extends \BaseController {
 	{
 		if(Input::has('search'))
 		{
-			$typeDocuments = $this->typeDocumentRepo->search(Input::get('search'));
+			$typeDocuments = $this->typeDocumentRepo->getModel()->search(Input::get('search'))->paginate(5);
 		}
 		else{
-			$typeDocuments= $this->typeDocumentRepo->findAll(true);
+			$typeDocuments= $this->typeDocumentRepo->getModel()->paginate(5);
 		}
 		return View::make('template.create',compact('typeDocuments'));
 	}
