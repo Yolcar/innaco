@@ -7,7 +7,6 @@ return array(
         'enabled' => true,
         //Linux
         'binary' => base_path('vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386'),
-        
         //Windows
         //'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"',
         'options' => array(
@@ -21,7 +20,10 @@ return array(
     ),
     'image' => array(
         'enabled' => true,
+        //Linux
         'binary' => base_path('vendor/h4cc/wkhtmltoimage-i386/bin/wkhtmltoimage-i386'),
+        //Windows
+        //'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe"',
         'options' => array(),
     ),
 
