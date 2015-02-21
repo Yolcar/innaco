@@ -5,7 +5,7 @@ return array(
     'database'      => array(
         'driver'    => 'mysql',
         'db_user'   => 'root',
-        'db_pass'   => '',
+        'db_pass'   => 'secret',
         'database'  => 'homestead',
         'host'      => 'localhost'
     ),
