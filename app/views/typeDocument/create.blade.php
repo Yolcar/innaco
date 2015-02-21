@@ -4,7 +4,7 @@
 
 @section('body')
 
-<h1 class="page-header">Crear Nuevo Tipo de Documento</h1>
+<h1 class="page-header">Nuevo Tipo de Documento</h1>
 
 {{ Form::open(['route' => 'type_document.store', 'method' => 'POST', 'role' => 'form']) }}
 

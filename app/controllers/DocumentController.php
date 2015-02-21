@@ -274,6 +274,8 @@ class documentController extends \BaseController {
             if($workflows->where('users_id','=',Auth::getUser()->id)){
                 $document = $this->documentRepo->find($id);
                 $pdf = PDF::loadView('document.print', compact('document'));
+                $pdf = $pdf->setOption("footer-html", "footer.html");
+                //$pdf = $pdf->setOption("header-html", "header.html");
                 return $pdf->stream($document->name.date("Y-m-d H:i:s").'.pdf');
                 //return View::make('document.print', compact('document'));
             }

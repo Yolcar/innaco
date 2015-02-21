@@ -50,19 +50,24 @@ Route::filter('auth', function()
 
 Route::filter('Authenticate', function()
 {
-    if(Auth::check()==true){
-        if(Session::getId() != Auth::user()->last_session){
+    if(Auth::check()){
+        if(Auth::user()->available != 0){
+            if(Session::getId() != Auth::user()->last_session){
+                Auth::logout();
+                return Redirect::to('login');
+            }
+        }else{
             Auth::logout();
             return Redirect::to('login');
         }
     }else{
         return Redirect::to('login');
-    };
+    }
 });
 
 Route::filter('isManagement', function()
 {
-    if(Auth::getUser()->hasGroup('Management') == false){
+    if(Auth::getUser()->hasGroup(Config::get('custom.group_management.name')) == false){
         return Response::view('errors.missing', array(), 404);
     }
 });

@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ Route('home')}}">Innaco</a>
+            <a class="navbar-brand fontbig" href="{{ Route('home')}}">{{Config::get('custom.system.client')}}</a>
         </div>
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-top-menu-collapse">
             <span class="icon-bar"></span>

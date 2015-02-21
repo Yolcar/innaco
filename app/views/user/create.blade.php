@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h1 class="page-header">Crear Usuario</h1>
+            <h1 class="page-header">Nuevo Usuario</h1>
 
             {{ Form::open(['route' => 'user.store', 'method' => 'POST', 'role' => 'form']) }}
 

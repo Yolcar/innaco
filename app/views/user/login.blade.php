@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>{{Config::get('custom.system.app_name')}}</title>
 
     {{ HTML::style('bootstrap/css/bootstrap.min.css') }}
     {{ HTML::style('css/dashboard.css') }}
@@ -24,14 +24,16 @@
 <!-- Begin page content -->
 <div class="container-fluid">
     <div class="col-md-4 col-md-offset-4">
-        <h3>Gestor de Documentos Innaco</h3>
+        <h3>{{Config::get('custom.system.app_name')}}</h3>
+        <h5>{{Config::get('custom.system.client')}}</h5>
+        <br><br><br>
         {{ Form::open(array('url' => 'login', 'method' => 'post')) }}
-        {{Form::label('email','Email')}}
+        {{Form::label('email','Correo')}}
         {{Form::text('email', null,array('class' => 'form-control'))}}
-        {{Form::label('password','Password')}}
+        {{Form::label('password','Contraseña')}}
         {{Form::password('password',array('class' => 'form-control'))}}
         <br>
-        {{Form::submit('Login', array('class' => 'btn btn-primary'))}}
+        {{Form::submit('Entrar', array('class' => 'btn btn-primary'))}}
         {{ Form::close() }}
     </div>
 </div>

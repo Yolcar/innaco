@@ -7,7 +7,7 @@
 
             <table id="" class=" display table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
-                <th><div class="bold">id</div></th>
+                <th><div class="bold">Serial</div></th>
                 @foreach($campos as $campo)
                     <th><div class="bold">{{$campo['name']}}</div></th>
                 @endforeach
@@ -18,7 +18,7 @@
                     <?php $j = $document->workflow->last()->id ?>
                     <?php $h = $document->workflow->first()->id ?>
                     <tr>
-                        <td>{{$document->id}}</td>
+                        <td>{{$document->serial}}</td>
                         @foreach($campos as $campo)
                             @if($campo['name']!='Estado')
                                 @if($campo['relacion2']=='')

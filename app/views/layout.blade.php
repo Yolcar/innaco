@@ -7,7 +7,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Dashboard Template for Bootstrap</title>
+	<title>{{Config::get('custom.system.app_name')}}</title>
 
 	{{ HTML::style('bootstrap/css/bootstrap.min.css') }}
 	{{ HTML::style('css/datepicker3.css') }}

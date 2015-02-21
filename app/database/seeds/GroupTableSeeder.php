@@ -7,12 +7,7 @@ class groupTableSeeder extends Seeder {
 	public function run()
 	{
         Group::create([
-            'name' => 'Management',
-            'available' => 1
-        ]);
-
-        Group::create([
-            'name' => 'Editor de Usuarios',
+            'name' => Config::get('custom.group_management.name'),
             'available' => 1
         ]);
 

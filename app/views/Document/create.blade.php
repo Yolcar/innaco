@@ -19,7 +19,7 @@
 @endsection
 @section('body')
 
-    <h1 class="page-header">Crear Nuevo Documento</h1>
+    <h1 class="page-header">Nuevo Documento</h1>
 
 
     {{ Form::open(['route' => 'document.store', 'method' => 'POST', 'role' => 'form']) }}

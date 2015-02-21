@@ -24,7 +24,7 @@
                 @if($workflow->users_id == 0)
                     <td></td>
                 @else
-                    <td>{{$workflow->user->email}}</td>
+                    <td>{{$workflow->user->full_name}}</td>
                 @endif
                 <td>{{$workflow->stepdocument->group->name}}</td>
                 <td>{{$workflow->state->name}}</td>
@@ -42,7 +42,11 @@
         </tbody>
     </table>
     @if($listo==true)
-        <a href="{{Route('document.print',$workflow->documents_id)}}" class="btn btn-custom-create" data-toggle="popover" data-content="Permite imprimir el documento" data-original-title="Imprimir">Imprimir</a>
+        @if($workflows->last()->user->sign != null)
+            <a href="{{Route('document.print',$workflow->documents_id)}}" class="btn btn-custom-create" data-toggle="popover" data-content="Permite imprimir el documento" data-original-title="Imprimir">Imprimir</a>
+        @else
+            <h3 class="alert alert-info">Para imprimir el documento es necesario la firma de {{$workflows->last()->user->full_name}}</h3>
+        @endif
     @endif
     <a href="{{Route('document.index')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Permite volver a la lista de los documentos creados" data-original-title="Atras">Atras</a>
 </div>

@@ -7,7 +7,7 @@
     <h1 class="page-header">Tareas</h1>
     <div class="col-lg-12">
         <div class="col-lg-3"><p><a id="example" class="btn btn-custom-create" href="{{Route('task.create')}}" data-trigger="hover" data-toggle="popover" data-content="Permite crear nuevas tareas que forman parte del flujo de un Documento." data-original-title="Crear Tarea">Crear Tarea</a></p></div>
-        <div class="col-lg-3"><a class="btn btn-custom-active" href="{{Route('taskActivation')}}" data-toggle="popover" data-content="Permite reactivar las plantillas que han sido desactivadas" data-original-title="Re-activar">Re-Activar</a></div>
+        <div class="col-lg-3"><a class="btn btn-custom-active" href="{{Route('taskActivation')}}" data-toggle="popover" data-content="Permite reactivar las tareas que han sido desactivadas" data-original-title="Re-activar">Re-Activar</a></div>
         <div class="col-lg-5"></div>
         <div class="col-lg-1"><a class="btn btn-custom-active" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> <strong>Ayuda</strong></a></div>
         <!-- Modal -->

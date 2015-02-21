@@ -124,7 +124,6 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Innaco\Components\FieldServiceProvider',
-        'Barryvdh\Debugbar\ServiceProvider',
         'Barryvdh\Snappy\ServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
         'Intervention\Image\ImageServiceProvider',
@@ -197,11 +196,8 @@ return array(
 
 		'Field' 			=> 'Innaco\Components\Field',
 		'PDF'               => 'Barryvdh\Snappy\Facades\SnappyPdf',
-		'Image'             => 'Barryvdh\Snappy\Facades\SnappyImage',
         'Excel'             => 'Maatwebsite\Excel\Facades\Excel',
         'Image'             =>  'Intervention\Image\Facades\Image'
-
-
 	),
 
 );

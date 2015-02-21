@@ -94,15 +94,18 @@ class groupController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$stepDocument = $this->stepDocumentRepo->getModel()->where('groups_id', '=' ,$id)->get();
+        $group = $this->groupRepo->find($id);
+        if($group->name != Config::get('custom.group_management.name')){
+            $stepDocument = $this->stepDocumentRepo->getModel()->where('groups_id', '=' ,$id)->get();
 
-		if($stepDocument->count()==0){
-			$group = $this->groupRepo->find($id);
-			$group->delete();
-		} else{
-			$this->groupRepo->getModel()->where('id','=',$id)->update(['available' => 0]);
-		}
-		return Redirect::route('group.index');
+            if($stepDocument->count()==0){
+                $group = $this->groupRepo->find($id);
+                $group->delete();
+            } else{
+                $this->groupRepo->getModel()->where('id','=',$id)->update(['available' => 0]);
+            }
+            return Redirect::route('group.index');
+        }
 	}
 
     public function activation()

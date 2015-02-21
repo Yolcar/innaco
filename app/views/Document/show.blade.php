@@ -12,6 +12,7 @@
     <div class="form-group text-center">
         <h1>Informacion del documento</h1>
         <h1 class="page-header">{{$document->name}}</h1>
+    </div>
     <br>
     <div class="col-lg-12">
         {{$document->body}}
@@ -21,7 +22,6 @@
     <p>
         <input type="submit" value="Atras" class="btn btn-custom-back" data-toggle="popover" data-content="Regresa a la pagina de lista de documentos creados" data-original-title="Atras">
     </p>
-    </div>
 
     {{Form::close()}}
 

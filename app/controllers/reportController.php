@@ -75,6 +75,7 @@ class reportController extends \BaseController {
         $ExecuteDateEnd = Input::get('ExecuteDateEnd');
         $Estado = Input::get('State');
         $CreatedUser = Input::get('CreatedUser');
+        $flag = false;
 
 
         $documents = $this->documentRepo->getModel();
@@ -118,59 +119,88 @@ class reportController extends \BaseController {
             array_push($campos,['name' => 'Tipo de Documento', 'relacion1' => 'template','relacion2' => 'name']);
         }
 
-        if(($CreateDateBegin!='' and $CreateDateEnd!='')){
+        if($CreateDateBegin!='' and $CreateDateEnd!=''){
             $CreateDateBegin = date_format(date_create(date("Y-m-d", strtotime($CreateDateBegin))), 'Y-m-d H:i:s');
             $CreateDateEnd = date_format(date_create(date("Y-m-d", strtotime($CreateDateEnd))), 'Y-m-d H:i:s');
 
-            if($CreateDateBegin <= $CreateDateEnd)
+            if($CreateDateBegin <= $CreateDateEnd){
                 $documents = $documents->where(function($query) use ($CreateDateBegin, $CreateDateEnd){
                     $query->whereBetween('created_at',array($CreateDateBegin,$CreateDateEnd));
                 });
-                array_push($campos,['name' => 'Fecha de Creacion', 'relacion1' => 'created_at','relacion2' => '']);
+            }
+            array_push($campos,['name' => 'Fecha de Creacion', 'relacion1' => 'created_at','relacion2' => '']);
         }
 
         if($ExecuteDateBegin!='' and $ExecuteDateEnd!=''){
-            $ExecuteDateBegin = date("Y-m-d", strtotime(Input::get('ExecuteDateBegin')));
-            $ExecuteDateEnd = date("Y-m-d", strtotime(Input::get('ExecuteDateEnd')));
+            $ExecuteDateBegin = date_format(date_create(date("Y-m-d", strtotime($ExecuteDateBegin))), 'Y-m-d H:i:s');
+            $ExecuteDateEnd = date_format(date_create(date("Y-m-d", strtotime($ExecuteDateEnd))), 'Y-m-d H:i:s');
+
             if($ExecuteDateBegin <= $ExecuteDateEnd){
                 $documents = $documents->where(function($query) use ($ExecuteDateBegin, $ExecuteDateEnd){
-                    $query->whereBetween('execute_date',array($ExecuteDateBegin,$ExecuteDateEnd));
+                    $query->whereBetween('created_at',array($ExecuteDateBegin,$ExecuteDateEnd));
                 });
-                array_push($campos,['name' => 'Fecha de Ejecucion', 'relacion1' => 'execute_date','relacion2' => '']);
             }
+            array_push($campos,['name' => 'Fecha de Ejecucion', 'relacion1' => 'execute_date','relacion2' => '']);
         }
 
         if($Estado!=''){
+            $flag = false;
+            $documents = $documents->where(function($query) use ($Estado, $flag){
             $workflows = $this->workflowRepo->getModel()->select('documents_id')->where('states_id','=',$Estado)->distinct()->get();
             foreach($workflows as $workflow){
                 if($Estado==2){
-                    $documents = $documents->where(function($query) use ($workflows){
                         foreach($workflows as $workflow){
                             $query->orwhere('id','=',$workflow->documents_id);
                         }
-                    });
+                    $flag = true;
                 }elseif($Estado==3){
                     if($this->workflowRepo->getModel()->where('documents_id','=',$workflow->documents_id)->get()->count() ==
                         $this->workflowRepo->getModel()->where('documents_id','=',$workflow->documents_id)->where('states_id','=',3)->get()->count()) {
-                        $documents = $documents->orwhere('id', '=', $workflow->documents_id);
+                        $query->orwhere('id', '=', $workflow->documents_id);
+                        $flag = true;
                     }
                 }elseif($Estado==4){
                     if($this->workflowRepo->getModel()->where('documents_id','=',$workflow->documents_id)->get()->count() > 0) {
-                        $documents = $documents->orwhere('id', '=', $workflow->documents_id);
+                        $query->orwhere('id', '=', $workflow->documents_id);
+                        $flag = true;
                     }
                 }
             }
+                if($flag==false){
+                    $query->where('id','=',0);
+                }
+            });
             array_push($campos,['name' => 'Estado', 'relacion1' => 'workflow','relacion2' => 'last', 'relacion3' => 'state', 'relacion4' => 'name']);
         }
 
-        if($CreatedUser != ''){
-            array_push($campos,['name' => 'Usuario Creador', 'relacion1' => 'workflow','relacion2' => 'first','relacion3' => 'user', 'relacion4' => 'last_name']);
-        }
+        if($CreatedUser != '') {
+            $flag=false;
+            $CreatedUser = explode('|',Input::get('CreatedUser'));
+            $documents = $documents->where(function($query) use ($CreatedUser,$flag) {
+                for($i = 0; $i < count($CreatedUser); $i++){
+                    $users = $this->userRepo->getModel()->Where('full_name','=',$CreatedUser[$i])->get();
+                    foreach($users as $user){
+                        $workflows = $this->workflowRepo->getModel()->where('users_id','=',$user->id)->get();
+                        foreach($workflows as $workflow){
+                            if($this->workflowRepo->getModel()->where('documents_id','=',$workflow->documents_id)->get()->first()->users_id == $user->id){
+                                $query->orwhere('id','=',$workflow->documents_id);
+                                $flag = true;
+                            }
+                        }
+                    }
+                }
+                if($flag==false){
+                    $query->where('id','=',0);
+                }
+            });
 
+            array_push($campos, ['name' => 'Usuario Creador', 'relacion1' => 'workflow', 'relacion2' => 'first', 'relacion3' => 'user', 'relacion4' => 'full_name']);
+        }
         $documents = $documents->get();
         if(Input::has('Print')){
             $pdf = PDF::loadView('report.document.printReport', compact('documents','campos'));
-            return $pdf->stream('reporte_documentos_'.date("Y-m-d H:i:s").'.pdf');
+            $pdf = $pdf->setOption("footer-html", "footer.html");
+            return $pdf->download('reporte_documentos_'.date("Y-m-d H:i:s").'.pdf');
             //return View::make('report.document.printReport',compact('documents','campos'));
         }
         return View::make('report.document.result',compact('documents','campos'))->with('NameDocument',Input::get('NameDocument'))->

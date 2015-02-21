@@ -7,7 +7,7 @@
     <h1 class="page-header">Plantillas</h1>
 
     <div class="col-lg-12">
-        <div class="col-lg-3"><p><a id="example" class="btn btn-custom-create"  href="{{Route('template.create')}}" data-toggle="popover" data-content="Permite crear nuevas tareas que forman parte del flujo de un Documento." data-original-title="Crear Tarea">Crear Plantillas</a></p></div>
+        <div class="col-lg-3"><p><a id="example" class="btn btn-custom-create"  href="{{Route('template.create')}}" data-toggle="popover" data-content="Permite crear una nueva plantilla." data-original-title="Crear Tarea">Crear Plantillas</a></p></div>
 
         <div class="col-lg-3"><a class="btn btn-custom-active" href="{{Route('templateActivation')}}" data-toggle="popover" data-content="Permite reactivar las plantillas que han sido desactivadas" data-original-title="Re-activar">Re-Activar</a></div>
         <div class="col-lg-5"></div>
@@ -53,9 +53,9 @@
                 <td>{{$template->typedocuments->name}}</td>
                 <td class="name">{{$template->name}}</td>
                 <td>
-                    <a class="btn btn-custom-step" href="{{ Route('steps', $template->id) }}" data-toggle="popover" data-content="Permite asinar los pasos que son parte del flujo de un Documento." data-original-title="Asignar Pasos "> Asignar Pasos </a>
-                    <a class="btn btn-custom-show" href="{{ Route('template.show', $template->id) }}"data-toggle="popover" data-content="Permite mostrar los pasos que forman parte del flujo de un Documento." data-original-title="Mostrar" > Mostrar </a>
-                    <a class="btn btn-custom-edit" href="{{Route('template.edit', $template->id)}}" data-toggle="popover" data-content="Permite editarlos pasos que forman parte del flujo de un Documento." data-original-title="Editar"> Editar</a>
+                    <a class="btn btn-custom-step" href="{{ Route('steps', $template->id) }}" data-toggle="popover" data-content="Permite asignar los pasos que son parte del flujo de un Documento." data-original-title="Asignar Pasos "> Asignar Pasos </a>
+                    <a class="btn btn-custom-show" href="{{ Route('template.show', $template->id) }}"data-toggle="popover" data-content="Permite mostrar la informacion de la plantilla creada." data-original-title="Mostrar" > Mostrar </a>
+                    <a class="btn btn-custom-edit" href="{{Route('template.edit', $template->id)}}" data-toggle="popover" data-content="Permite editar la plantilla creada." data-original-title="Editar"> Editar</a>
 
                     @if($template->document->count() > 0)
                         <button class="btn btn-custom-disable" id="confirm{{$template->id}}" data-trigger="hover" data-toggle="popover" data-content="Cambia la disponibilidad de esta plantilla y no podra se usada hasta que se habilite nuevamente." data-original-title="Desactivar plantilla" href="#" data-target="#disableTemplate{{$template->id}}" data-id="{{$template->id}}">Desactivar</button>

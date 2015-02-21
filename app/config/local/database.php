@@ -22,25 +22,34 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'homestead',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => Config::get('custom.database.host'),
+			'database'  => Config::get('custom.database.database'),
+			'username'  => Config::get('custom.database.db_user'),
+			'password'  => Config::get('custom.database.db_pass'),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
 
 		'pgsql' => array(
-			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'homestead',
-			'username' => 'homestead',
-			'password' => 'secret',
-			'charset'  => 'utf8',
-			'prefix'   => '',
-			'schema'   => 'public',
+			'driver'    => 'pgsql',
+            'host'      => Config::get('custom.database.host'),
+            'database'  => Config::get('custom.database.database'),
+            'username'  => Config::get('custom.database.db_user'),
+            'password'  => Config::get('custom.database.db_pass'),
+			'charset'   => 'utf8',
+			'prefix'    => '',
+			'schema'    => 'public',
 		),
+
+        'sqlsrv' => array(
+            'driver'   => 'sqlsrv',
+            'host'      => Config::get('custom.database.host'),
+            'database'  => Config::get('custom.database.database'),
+            'username'  => Config::get('custom.database.db_user'),
+            'password'  => Config::get('custom.database.db_pass'),
+            'prefix'   => '',
+        ),
 
 	),
 

@@ -29,9 +29,9 @@
                         <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
                     </div>
                     <div class="modal-body">
-                        -En esta seccion podra crear los tipos de documentos que identificaran las plantillas.
+                        -En esta seccion podra crear los tipos de documentos que identificaran a las plantillas.
                         <br>
-                        -Las posibles acciones sobre los tipos de documentos son:crear,desactivar,re-activar, eliminar y buscar.
+                        -Las posibles acciones sobre los tipos de documentos son:crear, desactivar, re-activar, eliminar y buscar.
                         <br>
                         -Las especificaciones las encontraras colocando el puntero sobre cada boton.
                     </div>

@@ -3,7 +3,7 @@
 @extends('navbar')
 
 @section('body')
-    <h1 class="page-header">Seleccione la plantillas que desea usar</h1>
+    <h1 class="page-header">Seleccion de Plantilla</h1>
 
     <h3>Se encontraron {{$templates->getTotal()}} Plantillas.</h3>
 

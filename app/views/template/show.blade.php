@@ -10,8 +10,6 @@
     {{ Form::model($template,['route' => ['template.index'], 'method' => 'GET', 'role' => 'form']) }}
 
     <h1 class="page-header">Informacion de la Plantilla: {{$template->name}}</h1>
-
-    <div class="form-group text-center">
     <br>
     <div class="col-lg-12">
         {{$template->body}}
@@ -21,7 +19,6 @@
     <p>
         <input type="submit" value="Atras" class="btn btn-custom-back" data-toggle="popover" data-content="Regresa a la pagina anterior de lista de plantillas" data-original-title="Atras">
     </p>
-    </div>
 
     {{Form::close()}}
 

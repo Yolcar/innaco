@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
-                <table id="" class=" display table table-striped table-bordered byCreatedUser" cellspacing="0" width="100%">
+                <table id="" class="display table table-striped table-bordered byCreatedUser" cellspacing="0" width="100%">
                     <thead>
                     <th><div class="bold">Nombre</div></th>
                     </thead>

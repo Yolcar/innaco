@@ -14,7 +14,7 @@
 
 @section('body')
 
-<h1 class="page-header">Crear Nueva Plantilla</h1>
+<h1 class="page-header">Nueva Plantilla</h1>
 
 @include('template.typeDocumentfilters')
 <br>

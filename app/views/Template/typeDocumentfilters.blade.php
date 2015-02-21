@@ -1,6 +1,6 @@
 
 <h3>Seleccione el Tipo de Documento</h3>
-<div class="span4"><button id="my-btn" type="button" data-trigger="hover" class="btn btn-custom-show " data-original-title="Mostrar" data-content="Mostrar la lista del Tipo de documento que que va a seleccionar" data-toggle="popover">Mostrar</button></div>
+<div class="span4"><button id="my-btn" type="button" data-trigger="hover" class="btn btn-custom-show " data-original-title="Mostrar" data-content="Muestra la lista del Tipo de documento que va a seleccionar" data-toggle="popover">Mostrar</button></div>
 
 
 

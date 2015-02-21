@@ -14,9 +14,11 @@
     </script>
 
     <h1 class="page-header">Usuarios</h1>
-<p>
-    <a class="btn btn-custom-create" href="{{Route('user.create')}}" data-toggle="popover" data-content="Permite registrar nuevos usuarios." data-original-title="Registrar Nuevo Usuario">Registrar Nuevo Usuario</a>
-</p>
+    <div class="col-lg-12">
+        <div class="col-lg-3"><p><a class="btn btn-custom-create" href="{{Route('user.create')}}" data-toggle="popover" data-content="Permite registrar nuevos usuarios." data-original-title="Registrar Nuevo Usuario">Registrar Nuevo Usuario</a></p></div>
+         <div class="col-lg-3"><a class="btn btn-custom-active" href="{{Route('userActivation')}}" data-toggle="popover" data-content="Permite reactivar los usuarios que han sido desactivados" data-original-title="Re-activar">Re-Activar</a></div>
+    </div>
+
 
     <h3>Se encontraron {{$users->getTotal()}} usuarios registrados.</h3>
 
@@ -38,7 +40,7 @@
                 <td>
                     <div id="yes" style="float:left; padding-right:10px">
                         {{ Form::open(['route' => ['user.edit', $user->id ], 'method' => 'GET']) }}
-                        {{ Form::button('Administrar', ['type' => 'submit', 'class' => 'btn btn-custom-disable','data-toggle'=>'popover','data-content'=>'Permite editar de los usuarios ya creados.','data-original-title'=>'Administrar']) }}
+                        {{ Form::button('Administrar', ['type' => 'submit', 'class' => 'btn btn-custom-disable','data-toggle'=>'popover','data-content'=>'Permite editar la informacion de los  usuarios ya creados.','data-original-title'=>'Administrar']) }}
                         {{ Form::close() }}
                     </div> <!-- end yes -->
                     @if($user->workflow->count()>0)

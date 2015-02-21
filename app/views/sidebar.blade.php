@@ -4,7 +4,7 @@
         <li class="active"><a href="{{ route('home') }}">Home</a></li>
         {{--Usuarios Basico--}}
         <li><a href="{{ route('document.index') }}">Documentos</a></li>
-        @if(Auth::getUser()->hasGroup('Management'))
+        @if(Auth::getUser()->hasGroup(Config::get('custom.group_management.name')))
             {{--Usuario Manager--}}
             <li><a href="{{ route('task.index') }}">Tareas</a></li>
             <li><a href="{{ route('template.index') }}">Plantillas</a></li>

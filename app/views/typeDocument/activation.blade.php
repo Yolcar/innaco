@@ -7,7 +7,7 @@
 
     <h3>Se encontraron {{$typedocuments->getTotal()}} tipos de documentos desactivados.</h3>
 
-    @include('typedocument.activeFilters')
+    @include('typeDocument.activeFilters')
 
     <table class="table table-striped table-hover">
         <thead>

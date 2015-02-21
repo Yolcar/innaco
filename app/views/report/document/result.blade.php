@@ -17,7 +17,7 @@
     <h1 class="page-header">Reportes Documentos</h1>
     <table id="table" class="display table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
-        <th><div class="bold">id</div></th>
+        <th><div class="bold">Serial</div></th>
         @foreach($campos as $campo)
             <th><div class="bold">{{$campo['name']}}</div></th>
         @endforeach
@@ -28,7 +28,7 @@
             <?php $j = $document->workflow->last()->id ?>
             <?php $h = $document->workflow->first()->id ?>
             <tr>
-                <td>{{$document->id}}</td>
+                <td>{{$document->serial}}</td>
                 @foreach($campos as $campo)
                     @if($campo['name']!='Estado')
                         @if($campo['relacion2']=='')
@@ -80,7 +80,7 @@
     {{ Form::input('hidden','Print',1) }}
     <p>
         <a href="{{Route('report.getDocuments')}}" class="btn btn-custom-back" data-toggle="popover" data-content="Permite la pagina principal de reporte" data-original-title="Atras">Atras</a>
-        <input type="submit" value="Imprimir" class="btn btn-custom-create" data-toggle="popover" data-content="Permite imprimir el reporte" data-original-title="Crear">
+        <input type="submit" value="Imprimir" class="btn btn-custom-create" data-toggle="popover" data-content="Permite imprimir el reporte" data-original-title="Imprimir">
     </p>
 
     {{ Form::close() }}

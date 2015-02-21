@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h1 class="page-header">Crear Nueva Tarea</h1>
+            <h1 class="page-header">Nueva Tarea</h1>
 
             {{ Form::open(['route' => 'task.store', 'method' => 'POST', 'role' => 'form']) }}
 

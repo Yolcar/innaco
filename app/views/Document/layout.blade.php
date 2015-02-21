@@ -17,7 +17,6 @@
     {{ HTML::script('js/jquery-2.1.3.min.js') }}
     {{ HTML::script('style_report/wkhtmltopdf.tablesplit.js') }}
     {{ HTML::style('style_report/style.css') }}
-
 </head>
 
 <body>
@@ -36,12 +35,6 @@
 </div>
 <div class="form-group text-center"><!-- content -->
     @yield('body')
-</div>
-<div class="form-group text-center"><!-- content -->
-    <p>Telefonos: 58 (212) 953.4144 &#45;&nbsp; 58 (212) 953.4144</p>
-    <p>Av. Principal del Bosque, Torre Credicard, Ofic. 114, Chacaito Caracas &#45; Miranda</p>
-    <p>http://www.innaco.com.ve</p>
-    <p>info@innaco.com.ve</p>
 </div>
 </body>
 </html>

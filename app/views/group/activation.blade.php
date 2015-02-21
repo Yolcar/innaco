@@ -3,7 +3,7 @@
 @extends('navbar')
 
 @section('body')
-    <h1 class="page-header">Tareas Desactivadas</h1>
+    <h1 class="page-header">Grupos Desactivados</h1>
 
     <h3>Se encontraron {{$groups->getTotal()}} Grupos Desactivados.</h3>
 

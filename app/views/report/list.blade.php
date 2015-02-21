@@ -26,14 +26,5 @@
         <div class="stats-item margin-left-5 margin-bottom-12"><i class="glyphicon glyphicon-list-alt"></i> <span class="text-large margin-left-15">{{$total_typeDocuments->count()}}</span>
             <br/>Total Tipos de Documentos
         </div>
-
     </div>
-
-    <a>Tareas</a>
-    <a>Plantillas</a>
-    <a>Tipos de Documentos</a>
-    <a>Documentos</a>
-    <a>Usuarios</a>
-    <a>Grupos</a>
-
 @endsection

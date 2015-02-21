@@ -13,7 +13,6 @@
 		"barryvdh/laravel-ide-helper": "~1.11",
 	  	"caouecs/laravel4-lang": "dev-master",
 	  	"nicolaslopezj/searchable": "1.*",
-		"barryvdh/laravel-debugbar": "~1.8",
         "barryvdh/laravel-snappy": "0.1.x",
         "h4cc/wkhtmltopdf-i386": "0.12.x",
         "h4cc/wkhtmltoimage-i386": "0.12.x",

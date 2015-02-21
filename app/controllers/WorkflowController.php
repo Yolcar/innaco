@@ -143,11 +143,11 @@ class WorkflowController extends \BaseController {
 
                     $stepdocuments = $this->stepDocumentRepo->getModel()->select('id')->distinct()->where('order','=',intval($order))->where('templates_id','=',intval($document->templates_id))->get();
                     $workflow_order = $this->workflowRepo->getModel()->select('id')->distinct();
+                    $workflow_order->orWhere(function($query) use ($stepdocuments, $idDocument){
                     foreach($stepdocuments as $stepdocument){
-                        $workflow_order->orWhere(function($query) use ($stepdocument){
-                            $query->where('stepsdocuments_id','=',intval($stepdocument->id))->where('states_id','=',2);
-                        });
+                            $query->where('stepsdocuments_id','=',intval($stepdocument->id))->where('states_id','=',2)->where('documents_id','=',$idDocument);
                     }
+                    });
                     $workflow_order = $workflow_order->get();
                     if($workflow_order->count() == 0){
                         $stepdocuments_temp = $this->stepDocumentRepo->getModel()->select('order')->distinct()->where('order','>',intval($order))->where('templates_id','=',intval($document->templates_id))->get();

@@ -28,7 +28,7 @@
                         <h4 class="modal-title" id="myModalLabel">Ayuda</h4>
                     </div>
                     <div class="modal-body">
-                        -En esta seccion podra crear los diferentes grupos en los cuales seran asignados los ususarios para conceder acceso a las respectivas funciones.
+                        -En esta seccion podra crear los diferentes grupos en los cuales seran incluidos los ususarios para conceder acceso a las respectivas funciones.
                         <br>
                         -Las posibles acciones sobre los grupos son:crear,desactivar,re-activar, eliminar y buscar.
                         <br>

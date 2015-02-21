@@ -4,7 +4,7 @@
 
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
     <meta name="generator" content="7.4.30.244"/>
-    <title>Inicio</title>
+    <title>Reporte Documentos</title>
     <!-- CSS -->
     {{ HTML::style('css/site_global.css') }}
     {{ HTML::style('css/index.css') }}
@@ -32,12 +32,5 @@
     <div class="clearfix colelem" id="u88-3"><!-- content -->
         @yield('body')
     </div>
-    <div class="clearfix colelem" id="u75-10"><!-- content -->
-        <p>Telefonos: 58 (251) 953.4144 &#45;&nbsp; 58 (251) 953.4145</p>
-        <p>Carrera 5 entre Calles 29 y 30, Zona Industrial I. &#45; Barquisimeto - Edo. Lara</p>
-        <p>http://www.innaco.com.ve</p>
-        <p>info@innaco.com.ve</p>
-    </div>
-    <div class="verticalspacer"></div>
 </body>
 </html>
